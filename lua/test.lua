@@ -1,0 +1,3 @@
+function DoAThing()
+    LogTest()
+end
