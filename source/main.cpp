@@ -16,6 +16,10 @@ extern "C"
 #include "lua535/lualib.h"
 }
 
+// Include headers from other parts of the program
+#include "lua_svc.h"
+#include "lua_hid.h"
+
 extern "C"
 {
     // Sysmodules should not use applet*.
@@ -112,17 +116,27 @@ void logToSd(std::string message)
     ofs.close();
 }
 
-int lua_LogTest(lua_State* L)
+// ---------- LUA UTILITY FUNCTIONS ---------
+int lua_Log(lua_State* L)
 {
-    std::ofstream ofs;
-    ofs.open("sdmc:/test.log", std::ofstream::out | std::ofstream::app);
-    if(ofs.is_open())
-    {
-        ofs << "c++ host function, run from lua" << std::endl;
-    }
-    ofs.close();
+    std::string msg = lua_tostring(L, 1);
+    logToSd(msg);
 
     return 0;
+}
+
+int lua_FatalThrow(lua_State* L)
+{
+    u32 errorCode = lua_tointeger(L, -1);
+    fatalThrow(errorCode);
+
+    return 0;
+}
+
+void registerUtility(lua_State* L)
+{
+    lua_register(L, "Log", lua_Log);
+    lua_register(L, "FatalThrow", lua_FatalThrow);
 }
 
 bool checkLua(lua_State* L, int result)
@@ -140,29 +154,21 @@ bool checkLua(lua_State* L, int result)
 int main(int argc, char* argv[])
 {
     // Initialization code can go here.
+    bool runLoop = false;
+
     logToSd("---NEW SESSION---");
 
     lua_State* L = luaL_newstate();
     luaL_openlibs(L);
 
-    lua_register(L, "LogTest", lua_LogTest);
-
-    if(checkLua(L, luaL_dofile(L, "sdmc:/script/test.lua")))
-    {
-        lua_getglobal(L, "DoAThing");
-        if(lua_isfunction(L, -1))
-        {
-            if(checkLua(L, lua_pcall(L, 0, 0, 0)))
-            {
-                logToSd("Function call succeeded!");
-            }
-        }
-    }
+    registerUtility(L);
+    registerSVC(L);
+    registerHID(L);
 
     // Your code / main loop goes here.
-    while(false)
+    while(runLoop)
     {
-        
+        checkLua(L, luaL_dofile(L, "sdmc:/script/test.lua"));
 
         svcSleepThread(6250000);
     }
