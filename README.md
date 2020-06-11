@@ -14,7 +14,7 @@ Make a pull request!\
 4. `cd tas-script`
 5. `make`
 6. You should see a file called `tas-script.nsp`
-\
+\\
 Optionally, you can choose to run `make sd` to make a convenient sd card package. The command should create a folder called `sd` that you can simply drag and drop the contents of onto your sd card.
 
 The `make` process will fail for one of three reasons:
