@@ -131,7 +131,7 @@ void lua_pushcontroller(lua_State* L, Controller controller)
 
             lua_createtable(L, 2, 0);
 
-            lua_pushinteger(L, 0);
+            lua_pushinteger(L, 1);
             
                 lua_createtable(L, 0, 2);
 
@@ -145,7 +145,7 @@ void lua_pushcontroller(lua_State* L, Controller controller)
 
             lua_settable(L, -3);
 
-            lua_pushinteger(L, 1);
+            lua_pushinteger(L, 2);
             
                 lua_createtable(L, 0, 2);
 
@@ -199,7 +199,7 @@ Controller lua_tocontroller(lua_State* L)
         lua_pushstring(L, "joysticks");
         lua_gettable(L, -2);
         
-            lua_pushinteger(L, 0);
+            lua_pushinteger(L, 1);
             lua_gettable(L, -2);
             
                 lua_pushstring(L, "dx");
@@ -214,7 +214,7 @@ Controller lua_tocontroller(lua_State* L)
 
             lua_pop(L, 1);
 
-            lua_pushinteger(L, 1);
+            lua_pushinteger(L, 2);
             lua_gettable(L, -2);
             
                 lua_pushstring(L, "dx");

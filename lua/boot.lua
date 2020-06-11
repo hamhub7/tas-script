@@ -1,3 +1,3 @@
 rootpath = "sdmc:/script/"
 
-dofile(rootpath + "main.lua")
+dofile(rootpath .. "main.lua")
