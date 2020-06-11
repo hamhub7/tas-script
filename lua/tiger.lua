@@ -89,6 +89,9 @@ end
 
 function tiger.runTas(filename, controller)
     local file = io.open(filename, "r")
+    if not file then
+        error("file " .. filename .. " could not be opened")
+    end
     io.input(file)
 
     local display = vi_OpenDefaultDisplay()
