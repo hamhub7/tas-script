@@ -6,6 +6,7 @@ void registerSwitch(lua_State* L)
     lua_register(L, "FatalThrow", lua_FatalThrow);
     lua_register(L, "EventWait", lua_EventWait);
     lua_register(L, "EventWaitMax", lua_EventWaitMax);
+    lua_register(L, "EventClose", lua_EventClose);
 }
 
 // Throws a fatal with a custom error code
@@ -43,6 +44,16 @@ int lua_EventWaitMax(lua_State* L)
     {
         fatalThrow(rc);
     }
+
+    return 0;
+}
+
+// Closes the event specified
+int lua_EventClose(lua_State* L)
+{
+    Event* event = reinterpret_cast<Event *>(lua_touserdata(L, -1));
+
+    eventClose(event);
 
     return 0;
 }

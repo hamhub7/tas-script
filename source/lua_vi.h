@@ -11,4 +11,5 @@ extern "C"
 void registerVI(lua_State* L);
 
 int lua_vi_OpenDefaultDisplay(lua_State* L);
+int lua_vi_CloseDisplay(lua_State* L);
 int lua_vi_GetDisplayVsyncEvent(lua_State* L);
