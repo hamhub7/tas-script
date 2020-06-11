@@ -17,11 +17,9 @@ buttons.DRIGHT = 16384;
 buttons.DDOWN = 32768;
 
 function clearInputs(controller)
-    controller = hiddbg_SetButtons(controller, 0)
-    controller = hiddbg_SetJoystick(controller, 1, 0, 0)
-    controller = hiddbg_SetJoystick(controller, 2, 0, 0)
-
-    return controller
+    hiddbg_SetButtons(controller, 0)
+    hiddbg_SetJoystick(controller, 1, 0, 0)
+    hiddbg_SetJoystick(controller, 2, 0, 0)
 end
 
 function strSplit(delim,str)
@@ -90,6 +88,9 @@ function runTas(filename, controller)
     local file = io.open(root .. filename, "r")
     io.input(file)
 
+    local display = vi_OpenDefaultDisplay()
+    local vsync_event = vi_GetDisplayVsyncEvent(display)
+
     local frame = 0
     local readFile = true
     local controlMsg = {}
@@ -109,9 +110,7 @@ function runTas(filename, controller)
             readFile = false
         end
 
-        display = vi_OpenDefaultDisplay()
-        vsync_event = vi_GetDisplayVsyncEvent(display)
-        EventWaitMax(event)
+        EventWaitMax(vsync_event)
 
         frame = frame + 1
 

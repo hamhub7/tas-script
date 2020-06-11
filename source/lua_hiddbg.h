@@ -1,8 +1,7 @@
 #pragma once
 
-#pragma once
-
 #include <switch.h>
+#include <cstring>
 extern "C"
 {
 #include "lua535/lua.h"
@@ -17,11 +16,8 @@ typedef struct
 } Controller;
 
 void registerHIDDBG(lua_State* L);
-void lua_pushcontroller(lua_State* L, Controller controller);
-Controller lua_tocontroller(lua_State* L);
 
 int lua_hiddbg_AttachController(lua_State* L);
 int lua_hiddbg_DetachController(lua_State* L);
 int lua_hiddbg_SetButtons(lua_State* L);
 int lua_hiddbg_SetJoystick(lua_State* L);
-int lua_hiddbg_SetState(lua_State* L);

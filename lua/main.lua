@@ -1,4 +1,4 @@
-include(rootpath .. "tas.lua")
+dofile(rootpath .. "tas.lua")
 
 controller = {}
 controllerAttached = false

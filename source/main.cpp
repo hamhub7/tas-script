@@ -31,7 +31,7 @@ extern "C"
     u32 __nx_applet_type = AppletType_None;
 
     // Adjust size as needed.
-    #define INNER_HEAP_SIZE 0x40000
+    #define INNER_HEAP_SIZE 0x400000
     size_t nx_inner_heap_size = INNER_HEAP_SIZE;
     char   nx_inner_heap[INNER_HEAP_SIZE];
 
@@ -96,6 +96,11 @@ void __attribute__((weak)) __appInit(void)
     if(R_FAILED(rc))
         fatalThrow(rc);
 
+    // time
+    rc = timeInitialize();
+    if (R_FAILED(rc))
+        fatalThrow(rc);
+
     // Attach Work Buffer
     rc = hiddbgAttachHdlsWorkBuffer();
     if (R_FAILED(rc))
@@ -110,6 +115,8 @@ void __attribute__((weak)) __appExit(void)
     lua_close(L);
     // Cleanup default services.
     hiddbgReleaseHdlsWorkBuffer();
+    timeExit();
+    viExit();
     hiddbgExit();
     fsdevUnmountAll();
     fsExit();
