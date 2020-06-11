@@ -5,7 +5,7 @@ void registerHIDDBG(lua_State* L)
     lua_register(L, "hiddbg_AttachController", lua_hiddbg_AttachController);
     lua_register(L, "hiddbg_DetachController", lua_hiddbg_DetachController);
     lua_register(L, "hiddbg_SetButtons", lua_hiddbg_SetButtons);
-    lua_register(L, "hiddbg_SetJoytick", lua_hiddbg_SetJoytick);
+    lua_register(L, "hiddbg_SetJoystick", lua_hiddbg_SetJoystick);
     lua_register(L, "hiddbg_SetState", lua_hiddbg_SetState);
 }
 
@@ -67,7 +67,7 @@ int lua_hiddbg_SetButtons(lua_State* L)
 }
 
 // Takes a controller table then a joystick index then an x position and y position and updates the joystick in question (returns the controller)
-int lua_hiddbg_SetJoytick(lua_State* L)
+int lua_hiddbg_SetJoystick(lua_State* L)
 {
     s32 y = lua_tointeger(L, -1);
     s32 x = lua_tointeger(L, -1);
