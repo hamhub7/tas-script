@@ -1,6 +1,6 @@
 # tas-script
 A modification of sys-script by Sorenbug to run on Lua and be more TAS focused\
-Find sys-script [here](https://github.com/sorenbug/sys-script)\
+Find sys-script [here](https://github.com/sorenbug/sys-script)
 
 ## Support the Creators
 Join our [Discord server](http://discord.gg/qeamCcV)\
