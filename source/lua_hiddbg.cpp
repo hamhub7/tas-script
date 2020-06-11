@@ -48,7 +48,7 @@ int lua_hiddbg_DetachController(lua_State* L)
     return 0;
 }
 
-// Takes a controller table then a button field and updates the buttons (returns the controller)
+// Takes a controller table then a button field and updates the buttons
 int lua_hiddbg_SetButtons(lua_State* L)
 {
     u64 buttons = lua_tointeger(L, -1);
@@ -61,12 +61,10 @@ int lua_hiddbg_SetButtons(lua_State* L)
     if(R_FAILED(rc))
         fatalThrow(rc);
 
-    lua_pushcontroller(L, controller);
-
-    return 1;
+    return 0;
 }
 
-// Takes a controller table then a joystick index then an x position and y position and updates the joystick in question (returns the controller)
+// Takes a controller table then a joystick index then an x position and y position and updates the joystick in question
 int lua_hiddbg_SetJoystick(lua_State* L)
 {
     s32 y = lua_tointeger(L, -1);
@@ -83,9 +81,7 @@ int lua_hiddbg_SetJoystick(lua_State* L)
     if(R_FAILED(rc))
         fatalThrow(rc);
 
-    lua_pushcontroller(L, controller);
-
-    return 1;
+    return 0;
 }
 
 // Takes a controller table and sets the state according to the controller's state. this means the controller must be edited in lua itself (this is not the preferred way of doing things, but it may be useful)
@@ -97,9 +93,7 @@ int lua_hiddbg_SetState(lua_State* L)
     if(R_FAILED(rc))
         fatalThrow(rc);
 
-    lua_pushcontroller(L, controller);
-
-    return 1;
+    return 0;
 }
 
 // Utility for pushing a controller to the top of the stack
