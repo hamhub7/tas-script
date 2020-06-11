@@ -1,5 +1,5 @@
 # tas-script
-A modification of sys-script by Sorenbug to run on Lua and be more TAS focused\\
+A modification of sys-script by Sorenbug to run on Lua and be more TAS focused\
 Find sys-script [here](https://github.com/sorenbug/sys-script)\
 
 ## Support the Creators
@@ -14,7 +14,8 @@ Make a pull request!\
 4. `cd tas-script`
 5. `make`
 6. You should see a file called `tas-script.nsp`
-\\
+\
+\
 Optionally, you can choose to run `make sd` to make a convenient sd card package. The command should create a folder called `sd` that you can simply drag and drop the contents of onto your sd card.
 
 The `make` process will fail for one of three reasons:
