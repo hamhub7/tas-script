@@ -106,6 +106,7 @@ void __attribute__((weak)) userAppExit(void);
 
 void __attribute__((weak)) __appExit(void)
 {
+    // Close VM
     lua_close(L);
     // Cleanup default services.
     hiddbgReleaseHdlsWorkBuffer();
@@ -116,7 +117,7 @@ void __attribute__((weak)) __appExit(void)
     smExit();
 }
 
-// outputs to sdmc/test.log
+// Outputs to sdmc/test.log
 void logToSd(std::string message)
 {
     std::ofstream ofs;
@@ -144,6 +145,7 @@ void registerUtility(lua_State* L)
     lua_register(L, "Log", lua_Log);
 }
 
+// Checks the current result and prints an error if it failed
 bool checkLua(lua_State* L, int result)
 {
     if(result != LUA_OK)
@@ -163,9 +165,11 @@ int main(int argc, char* argv[])
     ofs.open("sdmc:/test.log", std::ofstream::out | std::ofstream::trunc);
     ofs.close();
 
+    // Open new Lua VM
     L = luaL_newstate();
     luaL_openlibs(L);
 
+    // Register Lua functions
     registerUtility(L);
     registerSVC(L);
     registerHID(L);
