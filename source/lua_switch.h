@@ -9,5 +9,8 @@ extern "C"
 }
 
 void registerSwitch(lua_State* L);
+Event lua_toevent(lua_State* L);
 
 int lua_FatalThrow(lua_State* L);
+int lua_EventWait(lua_State* L);
+int lua_EventWaitMax(lua_State* L);

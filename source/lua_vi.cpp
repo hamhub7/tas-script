@@ -98,6 +98,8 @@ ViDisplay lua_todisplay(lua_State* L)
     lua_gettable(L, -2);
     result.initialized = lua_toboolean(L, -1);
     lua_pop(L, 1);
+
+    return result;
 }
 
 // Pushes an Event table to the top of the lua stack
