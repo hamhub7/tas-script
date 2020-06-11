@@ -1,5 +1,4 @@
 #include "lua_hiddbg.h"
-#include <fstream>
 
 void registerHIDDBG(lua_State* L)
 {
@@ -89,7 +88,7 @@ int lua_hiddbg_SetJoytick(lua_State* L)
     return 1;
 }
 
-// Takes a controller table and sets the state according to the controller's state. this means the controller must be edited in lua itself
+// Takes a controller table and sets the state according to the controller's state. this means the controller must be edited in lua itself (this is not the preferred way of doing things, but it may be useful)
 int lua_hiddbg_SetState(lua_State* L)
 {
     Controller controller = lua_tocontroller(L);

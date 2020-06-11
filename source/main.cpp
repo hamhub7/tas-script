@@ -17,9 +17,11 @@ extern "C"
 }
 
 // Include headers from other parts of the program
+#include "lua_switch.h"
 #include "lua_svc.h"
 #include "lua_hid.h"
 #include "lua_hiddbg.h"
+#include "lua_vi.h"
 
 lua_State* L;
 
@@ -137,19 +139,9 @@ int lua_Log(lua_State* L)
     return 0;
 }
 
-// Throws a fatal with a custom error code
-int lua_FatalThrow(lua_State* L)
-{
-    u32 errorCode = lua_tointeger(L, -1);
-    fatalThrow(errorCode);
-
-    return 0;
-}
-
 void registerUtility(lua_State* L)
 {
     lua_register(L, "Log", lua_Log);
-    lua_register(L, "FatalThrow", lua_FatalThrow);
 }
 
 bool checkLua(lua_State* L, int result)
@@ -178,6 +170,8 @@ int main(int argc, char* argv[])
     registerSVC(L);
     registerHID(L);
     registerHIDDBG(L);
+    registerVI(L);
+    registerSwitch(L);
 
     // Your code / main loop goes here.
     checkLua(L, luaL_dofile(L, "sdmc:/script/boot.lua"));
