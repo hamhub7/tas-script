@@ -5,7 +5,7 @@ Find sys-script [here](https://github.com/sorenbug/sys-script)
 ## Support the Creators
 Join our [Discord server](http://discord.gg/qeamCcV)\
 Support me on [Patreon](https://www.patreon.com/aaronhh) or [PayPal](https://www.paypal.me/aaronhamhub)\
-Make a pull request!\
+Make a pull request!
 
 ## Building from Source
 1. [Set up the required libraries](https://switchbrew.org/wiki/Setting_up_Development_Environment)
