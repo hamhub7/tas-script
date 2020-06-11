@@ -25,7 +25,10 @@ int lua_hiddbg_AttachController(lua_State* L)
     
     Result rc = hiddbgAttachHdlsVirtualDevice(&controller->handle, &device);
     if (R_FAILED(rc))
-        fatalThrow(rc);
+    {
+        lua_pushstring(L, "Error attaching controller: " + rc);
+        lua_error(L);
+    }
 
     controller->state.batteryCharge = 4;
 
@@ -43,7 +46,10 @@ int lua_hiddbg_DetachController(lua_State* L)
 
     Result rc = hiddbgDetachHdlsVirtualDevice(controller->handle);
     if (R_FAILED(rc))
-        fatalThrow(rc);
+    {
+        lua_pushstring(L, "Error disconnecting controller: " + rc);
+        lua_error(L);
+    }
 
     return 0;
 }
@@ -60,7 +66,8 @@ int lua_hiddbg_SetButtons(lua_State* L)
     Result rc = hiddbgSetHdlsState(controller->handle, &controller->state);
     if(R_FAILED(rc))
     {
-        fatalThrow(rc);
+        lua_pushstring(L, "Error setting buttons: " + rc);
+        lua_error(L);
     }
 
     return 0;
@@ -82,7 +89,8 @@ int lua_hiddbg_SetJoystick(lua_State* L)
     Result rc = hiddbgSetHdlsState(controller->handle, &controller->state);
     if(R_FAILED(rc))
     {
-        fatalThrow(rc);
+        lua_pushstring(L, "Error setting joystick: " + rc);
+        lua_error(L);
     }
 
     return 0;

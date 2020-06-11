@@ -16,7 +16,8 @@ int lua_vi_OpenDefaultDisplay(lua_State* L)
     Result rc = viOpenDefaultDisplay(disp);
     if(R_FAILED(rc))
     {
-        fatalThrow(rc);
+        lua_pushstring(L, "Error opening default display: " + rc);
+        lua_error(L);
     }
 
     return 1;
@@ -30,7 +31,8 @@ int lua_vi_CloseDisplay(lua_State* L)
     Result rc = viCloseDisplay(disp);
     if(R_FAILED(rc))
     {
-        fatalThrow(rc);
+        lua_pushstring(L, "Error closing display: " + rc);
+        lua_error(L);
     }
 
     return 1;
@@ -46,7 +48,8 @@ int lua_vi_GetDisplayVsyncEvent(lua_State* L)
     Result rc = viGetDisplayVsyncEvent(disp, vsync_event);
     if(R_FAILED(rc))
     {
-        fatalThrow(rc);
+        lua_pushstring(L, "Error getting vsync event: " + rc);
+        lua_error(L);
     }
 
     return 1;

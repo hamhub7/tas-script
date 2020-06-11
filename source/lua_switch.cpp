@@ -28,7 +28,8 @@ int lua_EventWait(lua_State* L)
     Result rc = eventWait(event, timeout);
     if(R_FAILED(rc))
     {
-        fatalThrow(rc);
+        lua_pushstring(L, "Error waiting for event: " + rc);
+        lua_error(L);
     }
 
     return 0;
@@ -42,7 +43,8 @@ int lua_EventWaitMax(lua_State* L)
     Result rc = eventWait(event, UINT64_MAX);
     if(R_FAILED(rc))
     {
-        fatalThrow(rc);
+        lua_pushstring(L, "Error waiting for event(max): " + rc);
+        lua_error(L);
     }
 
     return 0;
