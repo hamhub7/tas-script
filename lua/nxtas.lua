@@ -1,5 +1,7 @@
 local nxtas = {}
 
+nxtas.fileext = "txt"
+
 local buttons = {}
 buttons.A = 1;
 buttons.B = 2;
