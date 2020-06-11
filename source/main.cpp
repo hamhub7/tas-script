@@ -19,6 +19,9 @@ extern "C"
 // Include headers from other parts of the program
 #include "lua_svc.h"
 #include "lua_hid.h"
+#include "lua_hiddbg.h"
+
+lua_State* L;
 
 extern "C"
 {
@@ -90,13 +93,20 @@ void __attribute__((weak)) __appInit(void)
     rc = viInitialize(ViServiceType_System);
     if(R_FAILED(rc))
         fatalThrow(rc);
+
+    // Attach Work Buffer
+    rc = hiddbgAttachHdlsWorkBuffer();
+    if (R_FAILED(rc))
+        fatalThrow(rc);
 }
 
 void __attribute__((weak)) userAppExit(void);
 
 void __attribute__((weak)) __appExit(void)
 {
+    lua_close(L);
     // Cleanup default services.
+    hiddbgReleaseHdlsWorkBuffer();
     hiddbgExit();
     fsdevUnmountAll();
     fsExit();
@@ -154,25 +164,20 @@ bool checkLua(lua_State* L, int result)
 int main(int argc, char* argv[])
 {
     // Initialization code can go here.
-    bool runLoop = false;
+    std::ofstream ofs;
+    ofs.open("sdmc:/test.log", std::ofstream::out | std::ofstream::trunc);
+    ofs.close();
 
-    logToSd("---NEW SESSION---");
-
-    lua_State* L = luaL_newstate();
+    L = luaL_newstate();
     luaL_openlibs(L);
 
     registerUtility(L);
     registerSVC(L);
     registerHID(L);
+    registerHIDDBG(L);
 
     // Your code / main loop goes here.
-    while(runLoop)
-    {
-        checkLua(L, luaL_dofile(L, "sdmc:/script/test.lua"));
+    checkLua(L, luaL_dofile(L, "sdmc:/script/boot.lua"));
 
-        svcSleepThread(6250000);
-    }
-	
-    lua_close(L);
     return 0;
 }
