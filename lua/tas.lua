@@ -116,6 +116,8 @@ function runTas(filename, controller)
 
     end
 
+    EventClose(vsync_event)
+    vi_CloseDisplay(display)
     clearInputs(controller)
     io.close(file)
 end
