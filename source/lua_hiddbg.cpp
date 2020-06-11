@@ -76,8 +76,8 @@ int lua_hiddbg_SetJoystick(lua_State* L)
 
     Controller controller = lua_tocontroller(L);
 
-    controller.state.joysticks[index].dx = x;
-    controller.state.joysticks[index].dy = y;
+    controller.state.joysticks[index-1].dx = x;
+    controller.state.joysticks[index-1].dy = y;
 
     Result rc = hiddbgSetHdlsState(controller.handle, &controller.state);
     if(R_FAILED(rc))
