@@ -1,4 +1,6 @@
-buttons = {}
+local nxtas = {}
+
+local buttons = {}
 buttons.A = 1;
 buttons.B = 2;
 buttons.X = 4;
@@ -83,7 +85,7 @@ function runLine(controlMsg, controller)
     hiddbg_SetJoystick(controller, 2, controlMsg["joyright"]["x"], controlMsg["joyright"]["y"])
 end
 
-function runTas(filename, controller)
+function nxtas.runTas(filename, controller)
     local root = "sdmc:/scripts/"
     local file = io.open(root .. filename, "r")
     io.input(file)
@@ -121,3 +123,5 @@ function runTas(filename, controller)
     clearInputs(controller)
     io.close(file)
 end
+
+return nxtas
