@@ -88,8 +88,7 @@ function runLine(controlMsg, controller)
 end
 
 function tiger.runTas(filename, controller)
-    local root = "sdmc:/scripts/"
-    local file = io.open(root .. filename, "r")
+    local file = io.open(filename, "r")
     io.input(file)
 
     local display = vi_OpenDefaultDisplay()
