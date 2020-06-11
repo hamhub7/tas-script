@@ -1,6 +1,6 @@
 /.vscode
 /build
-/sd
+/sdcard
 *.elf
 *.npdm
 *.nso
