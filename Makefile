@@ -220,3 +220,13 @@ $(OFILES_SRC)	: $(HFILES_BIN)
 #---------------------------------------------------------------------------------------
 endif
 #---------------------------------------------------------------------------------------
+
+sd: $(BUILD) $(OUTPUT).nsp FORCE
+	@echo writing output to sd/ ...
+	@mkdir -p $(TOPDIR)/sd/atmosphere/contents/4200736372402948/flags
+	@cp -f $(TARGET).nsp $(TOPDIR)/sd/atmosphere/contents/4200736372402948/exefs.nsp
+	@touch $(TOPDIR)/sd/atmosphere/contents/4200736372402948/flags/boot2.flag
+	@cp -f $(TOPDIR)/toolbox.json $(TOPDIR)/sd/atmosphere/contents/4200736372402948/toolbox.json
+	@rm -fr $(TOPDIR)/sd/script
+	@cp -fr $(TOPDIR)/lua $(TOPDIR)/sd/script
+FORCE:
