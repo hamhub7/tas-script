@@ -127,6 +127,8 @@ void logToSd(std::string message)
 }
 
 // ---------- LUA UTILITY FUNCTIONS ---------
+
+// Logs a message to the sd card
 int lua_Log(lua_State* L)
 {
     std::string msg = lua_tostring(L, 1);
@@ -135,6 +137,7 @@ int lua_Log(lua_State* L)
     return 0;
 }
 
+// Throws a fatal with a custom error code
 int lua_FatalThrow(lua_State* L)
 {
     u32 errorCode = lua_tointeger(L, -1);

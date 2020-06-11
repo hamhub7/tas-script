@@ -10,7 +10,7 @@ void registerHIDDBG(lua_State* L)
     lua_register(L, "hiddbg_SetState", lua_hiddbg_SetState);
 }
 
-// Returns a pro controller connect using bluetooth
+// Returns a pro controller connected using bluetooth
 int lua_hiddbg_AttachController(lua_State* L)
 {
     HiddbgHdlsDeviceInfo device = { 0 };
@@ -37,6 +37,7 @@ int lua_hiddbg_AttachController(lua_State* L)
     return 1;
 }
 
+// Takes a controller table and detaches it
 int lua_hiddbg_DetachController(lua_State* L)
 {
     Controller controller = lua_tocontroller(L);
@@ -88,6 +89,7 @@ int lua_hiddbg_SetJoytick(lua_State* L)
     return 1;
 }
 
+// Takes a controller table and sets the state according to the controller's state. this means the controller must be edited in lua itself
 int lua_hiddbg_SetState(lua_State* L)
 {
     Controller controller = lua_tocontroller(L);
@@ -101,6 +103,7 @@ int lua_hiddbg_SetState(lua_State* L)
     return 1;
 }
 
+// Utility for pushing a controller to the top of the stack
 void lua_pushcontroller(lua_State* L, Controller controller)
 {
     lua_createtable(L, 0, 2);
@@ -166,6 +169,7 @@ void lua_pushcontroller(lua_State* L, Controller controller)
     lua_settable(L, -3);
 }
 
+// Utility for grabbing a controller from the top of the stack
 Controller lua_tocontroller(lua_State* L)
 {
     Controller result = { 0 };
