@@ -5,7 +5,7 @@ while true do
         controller = hiddbg_AttachController()
     end
     if hid_KeyboardDown(0x1f) then
-        hiddbg_DetachController(controller["handle"])
+        hiddbg_DetachController(controller)
     end
     if hid_KeyboardDown(0x20) then
         svc_SleepThread(1000000000)

@@ -39,24 +39,53 @@ int lua_hiddbg_AttachController(lua_State* L)
 
 int lua_hiddbg_DetachController(lua_State* L)
 {
-    u64 handle = lua_tointeger(L, -1);
+    Controller controller = lua_tocontroller(L);
 
-    Result rc = hiddbgDetachHdlsVirtualDevice(handle);
+    Result rc = hiddbgDetachHdlsVirtualDevice(controller.handle);
     if (R_FAILED(rc))
         fatalThrow(rc);
 
     return 0;
 }
 
-// Takes a controller table then a button string and updates the buttons
+// Takes a controller table then a button field and updates the buttons (returns the controller)
 int lua_hiddbg_SetButtons(lua_State* L)
 {
-    return 0;
+    u64 buttons = lua_tointeger(L, -1);
+
+    Controller controller = lua_tocontroller(L);
+
+    controller.state.buttons = buttons;
+
+    Result rc = hiddbgSetHdlsState(controller.handle, &controller.state);
+    if(R_FAILED(rc))
+        fatalThrow(rc);
+
+    lua_pushcontroller(L, controller);
+
+    return 1;
 }
 
+// Takes a controller table then a joystick index then an x position and y position and updates the joystick in question (returns the controller)
 int lua_hiddbg_SetJoytick(lua_State* L)
 {
-    return 0;
+    s32 y = lua_tointeger(L, -1);
+    s32 x = lua_tointeger(L, -1);
+
+    int index = lua_tointeger(L, -1);
+
+    Controller controller = lua_tocontroller(L);
+
+    controller.state.joysticks[index].dx = x;
+    controller.state.joysticks[index].dy = y;
+
+    Result rc = hiddbgSetHdlsState(controller.handle, &controller.state);
+    if(R_FAILED(rc))
+        fatalThrow(rc);
+
+    lua_pushcontroller(L, controller);
+
+    return 1;
 }
 
 int lua_hiddbg_SetState(lua_State* L)
@@ -67,7 +96,9 @@ int lua_hiddbg_SetState(lua_State* L)
     if(R_FAILED(rc))
         fatalThrow(rc);
 
-    return 0;
+    lua_pushcontroller(L, controller);
+
+    return 1;
 }
 
 void lua_pushcontroller(lua_State* L, Controller controller)
