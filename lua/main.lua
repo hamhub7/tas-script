@@ -1,12 +1,18 @@
 tas = require "nxtas"
+colors = require "colors"
 local fileext = tas.fileext
 local root = "sdmc:/scripts/"
+
+local bodyColor = colors.rgb(43, 43, 43)
+local buttonsColor = colors.rgb(0, 0, 0)
+local gripLColor = colors.rgb(20, 184, 82)
+local gripRColor = colors.rgb(249, 81, 139)
 
 controller = nil
 while true do
     hid_ScanInput()
     if hid_KeyboardDown(0x2e) and not hiddbg_IsControllerAttached(controller) then --EQUALS
-        controller = hiddbg_AttachController()
+        controller = hiddbg_AttachController(bodyColor, buttonsColor, gripLColor, gripRColor)
 
     elseif hid_KeyboardDown(0x2d) and hiddbg_IsControllerAttached(controller) then --MINUS
         hiddbg_DetachController(controller)
@@ -82,7 +88,7 @@ while true do
         if not good then
             Log("Error occured (script12): " .. err)
         end
-        
+
     end
     svc_SleepThread(6250000)
 end

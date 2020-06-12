@@ -10,16 +10,21 @@ void registerHIDDBG(lua_State* L)
     lua_register(L, "hiddbg_SetJoystick", lua_hiddbg_SetJoystick);
 }
 
-// Returns a pro controller connected using bluetooth
+// Returns a pro controller connected using bluetooth, accepting arguments for the bodyColor then buttonsColor then gripLColor then gripRcolor
 int lua_hiddbg_AttachController(lua_State* L)
 {
+    u32 gripRColor = lua_tointeger(L, -1);
+    u32 gripLColor = lua_tointeger(L, -2);
+    u32 buttonsColor = lua_tointeger(L, -3);
+    u32 bodyColor = lua_tointeger(L, -4);
+
     HiddbgHdlsDeviceInfo device = { 0 };
     device.deviceType = HidDeviceType_FullKey3;
     device.npadInterfaceType = NpadInterfaceType_Bluetooth;
-    device.singleColorBody = RGBA8_MAXALPHA(0, 0, 0);
-    device.singleColorButtons = RGBA8_MAXALPHA(255, 255, 255);
-    device.colorLeftGrip = RGBA8_MAXALPHA(255, 255, 255);
-    device.colorRightGrip = RGBA8_MAXALPHA(255, 255, 255);
+    device.singleColorBody = bodyColor;
+    device.singleColorButtons = buttonsColor;
+    device.colorLeftGrip = gripLColor;
+    device.colorRightGrip = gripRColor;
 
     Controller* controller = reinterpret_cast<Controller *>(lua_newuserdata(L, sizeof(Controller)));
     std::memset(controller, 0, sizeof(Controller));
