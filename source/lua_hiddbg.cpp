@@ -78,9 +78,9 @@ int lua_hiddbg_SetButtons(lua_State* L)
     Result rc = hiddbgSetHdlsState(controller->handle, &controller->state);
     if(R_FAILED(rc))
     {
-        std::size_t len = std::snprintf(nullptr, 0, "Error setting controller state: %#x", rc);
+        std::size_t len = std::snprintf(nullptr, 0, "Error setting button state: %#x", rc);
         char error[len+1];
-        std::sprintf(error, "Error setting controller state: %#x", rc);
+        std::sprintf(error, "Error setting button state: %#x", rc);
         lua_pushstring(L, error);
         lua_error(L);
     }
@@ -104,7 +104,10 @@ int lua_hiddbg_SetJoystick(lua_State* L)
     Result rc = hiddbgSetHdlsState(controller->handle, &controller->state);
     if(R_FAILED(rc))
     {
-        lua_pushstring(L, "Error setting joystick: " + rc);
+        std::size_t len = std::snprintf(nullptr, 0, "Error setting joystick state: %#x", rc);
+        char error[len+1];
+        std::sprintf(error, "Error setting joystick state: %#x", rc);
+        lua_pushstring(L, error);
         lua_error(L);
     }
 
