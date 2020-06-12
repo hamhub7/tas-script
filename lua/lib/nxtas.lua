@@ -1,6 +1,7 @@
 local nxtas = {}
 
 nxtas.fileext = "txt"
+nxtas.multiplayer = false
 
 local buttons = {
     A       = 1 << 0,

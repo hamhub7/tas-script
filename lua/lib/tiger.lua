@@ -1,6 +1,7 @@
 local tiger = {}
 
 tiger.fileext = "tig"
+tiger.multiplayer = false
 
 local buttons = {
     A       = 1 << 0,
