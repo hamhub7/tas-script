@@ -193,7 +193,7 @@ function runTasCoroutine(filename, controller)
         end
 
         frame = frame + 1
-
+        
         coroutine.yield()
     end
 

@@ -2,6 +2,7 @@
 /build
 /sdcard
 /sd
+/scripts
 *.elf
 *.npdm
 *.nso
