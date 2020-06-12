@@ -19,7 +19,9 @@ local buttons = {
     DLEFT   = 1 << 12,
     DUP     = 1 << 13,
     DRIGHT  = 1 << 14,
-    DDOWN   = 1 << 15
+    DDOWN   = 1 << 15,
+    NONE    = 0,
+    ALL     = buttons.A|buttons.B|buttons.X|buttons.Y|buttons.LSTICK|buttons.RSTICK|buttons.L|buttons.R|buttons.ZL|buttons.ZR|buttons.PLUS|buttons.MINUS|buttons.DLEFT|buttons.DUP|buttons.DRIGHT|buttons.DDOWN
 }
 
 function bit_not(x,y)
@@ -70,11 +72,19 @@ function signIndependentCeil(x)
     end
 end
 
+function remove_key(x) 
+    if string.sub(x,1,4) ~= "KEY_" then
+        return x;
+    else 
+        return string.sub(x,5)
+    end
+end
+
 function keysInt(keysList) 
     local keys = 0
     for i,v in ipairs(keysList) do
         for k in pairs(buttons) do
-            if k == v then
+            if k == remove_key(v) then
                 keys = keys + buttons[k]
                 break
             end
