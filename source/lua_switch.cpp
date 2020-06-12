@@ -28,7 +28,10 @@ int lua_EventWait(lua_State* L)
     Result rc = eventWait(event, timeout);
     if(R_FAILED(rc))
     {
-        lua_pushstring(L, "Error waiting for event: " + rc);
+        std::size_t len = std::snprintf(nullptr, 0, "Error waiting for event: %#x", rc);
+        char error[len+1];
+        std::sprintf(error, "Error waiting for event: %#x", rc);
+        lua_pushstring(L, error);
         lua_error(L);
     }
 
@@ -43,7 +46,10 @@ int lua_EventWaitMax(lua_State* L)
     Result rc = eventWait(event, UINT64_MAX);
     if(R_FAILED(rc))
     {
-        lua_pushstring(L, "Error waiting for event(max): " + rc);
+        std::size_t len = std::snprintf(nullptr, 0, "Error waiting for event(max): %#x", rc);
+        char error[len+1];
+        std::sprintf(error, "Error waiting for event(max): %#x", rc);
+        lua_pushstring(L, error);
         lua_error(L);
     }
 

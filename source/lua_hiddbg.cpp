@@ -1,5 +1,5 @@
 #include "lua_hiddbg.h"
-#include <fstream>
+#include <string>
 
 void registerHIDDBG(lua_State* L)
 {
@@ -26,7 +26,10 @@ int lua_hiddbg_AttachController(lua_State* L)
     Result rc = hiddbgAttachHdlsVirtualDevice(&controller->handle, &device);
     if (R_FAILED(rc))
     {
-        lua_pushstring(L, "Error attaching controller: " + rc);
+        std::size_t len = std::snprintf(nullptr, 0, "Error attaching controller: %#x", rc);
+        char error[len+1];
+        std::sprintf(error, "Error attaching controller: %#x", rc);
+        lua_pushstring(L, error);
         lua_error(L);
     }
 
@@ -34,7 +37,13 @@ int lua_hiddbg_AttachController(lua_State* L)
 
     rc = hiddbgSetHdlsState(controller->handle, &controller->state);
     if(R_FAILED(rc))
-        fatalThrow(rc);
+    {
+        std::size_t len = std::snprintf(nullptr, 0, "Error setting controller state: %#x", rc);
+        char error[len+1];
+        std::sprintf(error, "Error setting controller state: %#x", rc);
+        lua_pushstring(L, error);
+        lua_error(L);
+    }
 
     return 1;
 }
@@ -47,7 +56,10 @@ int lua_hiddbg_DetachController(lua_State* L)
     Result rc = hiddbgDetachHdlsVirtualDevice(controller->handle);
     if (R_FAILED(rc))
     {
-        lua_pushstring(L, "Error disconnecting controller: " + rc);
+        std::size_t len = std::snprintf(nullptr, 0, "Error disconnecting controller: %#x", rc);
+        char error[len+1];
+        std::sprintf(error, "Error disconnecting controller: %#x", rc);
+        lua_pushstring(L, error);
         lua_error(L);
     }
 
@@ -66,7 +78,10 @@ int lua_hiddbg_SetButtons(lua_State* L)
     Result rc = hiddbgSetHdlsState(controller->handle, &controller->state);
     if(R_FAILED(rc))
     {
-        lua_pushstring(L, "Error setting buttons: " + rc);
+        std::size_t len = std::snprintf(nullptr, 0, "Error setting controller state: %#x", rc);
+        char error[len+1];
+        std::sprintf(error, "Error setting controller state: %#x", rc);
+        lua_pushstring(L, error);
         lua_error(L);
     }
 
