@@ -5,6 +5,7 @@ void registerHIDDBG(lua_State* L)
 {
     lua_register(L, "hiddbg_AttachController", lua_hiddbg_AttachController);
     lua_register(L, "hiddbg_DetachController", lua_hiddbg_DetachController);
+    lua_register(L, "hiddbg_IsControllerAttached", lua_hiddbg_IsControllerAttached);
     lua_register(L, "hiddbg_SetButtons", lua_hiddbg_SetButtons);
     lua_register(L, "hiddbg_SetJoystick", lua_hiddbg_SetJoystick);
 }
@@ -64,6 +65,34 @@ int lua_hiddbg_DetachController(lua_State* L)
     }
 
     return 0;
+}
+
+// Takes a controller userdata and returns whether the handle is connected
+int lua_hiddbg_IsControllerAttached(lua_State* L)
+{
+    Controller* controller = reinterpret_cast<Controller *>(lua_touserdata(L, -1));
+    if(controller == nullptr)
+    {
+        lua_pushboolean(L, false);
+
+        return 1;
+    }
+    
+    bool isAttached;
+
+    Result rc = hiddbgIsHdlsVirtualDeviceAttached(controller->handle, &isAttached);
+    if(R_FAILED(rc))
+    {
+        std::size_t len = std::snprintf(nullptr, 0, "Error checking if controller attached: %#x", rc);
+        char error[len+1];
+        std::sprintf(error, "Error checking if controller attached: %#x", rc);
+        lua_pushstring(L, error);
+        lua_error(L);
+    }
+
+    lua_pushboolean(L, isAttached);
+
+    return 1;
 }
 
 // Takes a controller userdata then a button field and updates the buttons

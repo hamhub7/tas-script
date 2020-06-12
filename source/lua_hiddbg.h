@@ -19,5 +19,6 @@ void registerHIDDBG(lua_State* L);
 
 int lua_hiddbg_AttachController(lua_State* L);
 int lua_hiddbg_DetachController(lua_State* L);
+int lua_hiddbg_IsControllerAttached(lua_State* L);
 int lua_hiddbg_SetButtons(lua_State* L);
 int lua_hiddbg_SetJoystick(lua_State* L);
