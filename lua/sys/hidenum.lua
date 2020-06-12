@@ -257,7 +257,7 @@ hidenum.ControllerKeys = {
     JOYCON_RIGHT = 1 << 0,
     JOYCON_DOWN = 1 << 1,
     JOYCON_UP = 1 << 2,
-    JOYCON_LEFT 1 << 3,
+    JOYCON_LEFT = 1 << 3,
 
     UP = (1 << 13) | (1 << 17) | (1 << 21),
     DOWN = (1 << 15) | (1 << 19) | (1 << 23),
