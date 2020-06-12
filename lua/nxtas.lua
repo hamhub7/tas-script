@@ -1,7 +1,6 @@
 local nxtas = {}
 
 nxtas.fileext = "txt"
-nxtas.multiplayer = true
 
 local buttons = {
     A       = 1 << 0,
@@ -126,77 +125,6 @@ function nxtas.runTas(filename, controller)
 
     EventClose(vsync_event)
     vi_CloseDisplay(display)
-    clearInputs(controller)
-    io.close(file)
-end
-
-function nxtas.runMuliplayerTas(filenames, controllers)
-    if rawlen(filenames) ~= rawlen(controllers) then
-        error("filenames and controllers were not the same size")
-    end
-    local numPlayers = rawlen(filenames) --should do a check here to make sure we dont add any more controllers than allowed
-
-    local display = vi_OpenDefaultDisplay()
-    local vsync_event = vi_GetDisplayVsyncEvent(display)
-
-    local players = {}
-    for i = 1, numPlayers do
-        table.insert(players, coroutine.create(runTasCoroutine))
-    end
-
-    while true do
-        local shouldBreak = true
-        for i,co in ipairs(players) do
-            if coroutine.status(co) ~= "dead" then
-                shouldBreak = false
-                break
-            end
-        end
-        if shouldBreak then break end
-
-        for i,co in ipairs(players) do
-            if coroutine.status(co) ~= "dead" then
-            coroutine.resume(co, filenames[i], controllers[i])
-            end
-        end
-
-        EventWaitMax(vsync_event)
-    end
-
-    EventClose(vsync_event)
-    vi_CloseDisplay(display)
-end
-
-function runTasCoroutine(filename, controller)
-    local file = io.open(filename, "r")
-    if not file then
-        error("file " .. filename .. " could not be opened")
-    end
-    io.input(file)
-
-    local frame = 0
-    local readFile = true
-    local controlMsg = {}
-    while true do
-        if readFile then
-            local line = io.read()
-            if line == nil then break end
-            controlMsg = scanLine(line)
-        end
-
-        if controlMsg["frame"] == frame then
-            runLine(controlMsg, controller)
-            readFile = true
-        else
-            clearInputs(controller)
-            readFile = false
-        end
-
-        frame = frame + 1
-        
-        coroutine.yield()
-    end
-
     clearInputs(controller)
     io.close(file)
 end
