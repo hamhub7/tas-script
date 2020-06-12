@@ -2,27 +2,24 @@ local nxtas = {}
 
 nxtas.fileext = "txt"
 
-function bit(int n)
-    return bit.lshift(1, n)
-end
-
-local buttons = {}
-buttons.A = bit(0);
-buttons.B = bit(1);
-buttons.X = bit(2);
-buttons.Y = bit(3);
-buttons.LSTICK = bit(4);
-buttons.RSTICK = bit(5);
-buttons.L = bit(6);
-buttons.R = bit(7);
-buttons.ZL = bit(8);
-buttons.ZR = bit(9);
-buttons.PLUS = bit(10);
-buttons.MINUS = bit(11);
-buttons.DLEFT = bit(12);
-buttons.DUP = bit(13);
-buttons.DRIGHT = bit(14);
-buttons.DDOWN = bit(15);
+local buttons = {
+    A       = 1 << 0,
+    B       = 1 << 1,
+    X       = 1 << 2,
+    Y       = 1 << 3,
+    LSTICK  = 1 << 4,
+    RSTICK  = 1 << 5,
+    L       = 1 << 6,
+    R       = 1 << 7,
+    ZL      = 1 << 8,
+    ZR      = 1 << 9,
+    PLUS    = 1 << 10,
+    MINUS   = 1 << 11,
+    DLEFT   = 1 << 12,
+    DUP     = 1 << 13,
+    DRIGHT  = 1 << 14,
+    DDOWN   = 1 << 15
+}
 
 function clearInputs(controller)
     hiddbg_SetButtons(controller, 0)
