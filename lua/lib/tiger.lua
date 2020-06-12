@@ -3,6 +3,16 @@ local tiger = {}
 tiger.fileext = "tig"
 tiger.multiplayer = false
 
+function bitsUpTo(x) 
+    local res = 0
+    local c = 1
+    while c < x + 1 do
+        res = res | 1 << c
+        c = c + 1
+    end
+    return res
+end
+
 local buttons = {
     A       = 1 << 0,
     B       = 1 << 1,
@@ -21,10 +31,10 @@ local buttons = {
     DRIGHT  = 1 << 14,
     DDOWN   = 1 << 15,
     NONE    = 0,
-    ALL     = buttons.A|buttons.B|buttons.X|buttons.Y|buttons.LSTICK|buttons.RSTICK|buttons.L|buttons.R|buttons.ZL|buttons.ZR|buttons.PLUS|buttons.MINUS|buttons.DLEFT|buttons.DUP|buttons.DRIGHT|buttons.DDOWN
+    ALL     = bitsUpTo(15)
 }
 
-function bit_not(x,y)
+function bitNot(x,y)
     return x - (x & y)
 end
 
@@ -147,7 +157,7 @@ function scanLine(line, activeKeys)
 
     local controlMsg = {}
     controlMsg["frame"] = frame
-    controlMsg["keys"] = bit_not(activeKeys | keysInt(onKeys), keysInt(offKeys))
+    controlMsg["keys"] = bitNot(activeKeys | keysInt(onKeys), keysInt(offKeys))
     controlMsg["joyleft"] = {}
     controlMsg["joyleft"]["x"] = lstickPos.dx
     controlMsg["joyleft"]["y"] = lstickPos.dy
