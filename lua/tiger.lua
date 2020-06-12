@@ -59,7 +59,7 @@ function sign(x)
     end
 end
 
-function sign_independent_ceil(x) 
+function signIndependentCeil(x) 
     if x == 0 then
         return 0
     elseif sign(x) == 1 then
@@ -90,8 +90,8 @@ function makeStickCartesian(ang, mag)
     end
     ang = ang * 3.14159265358979323 / 180
     local res = {}
-    res.dx = sign_independent_ceil(math.sin(ang) * mag)
-    res.dy = sign_independent_ceil(math.cos(ang) * mag)
+    res.dx = signIndependentCeil(math.sin(ang) * mag)
+    res.dy = signIndependentCeil(math.cos(ang) * mag)
     return res
 end
 
