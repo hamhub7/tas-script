@@ -138,6 +138,18 @@ void logToSd(std::string message)
 
 // ---------- LUA UTILITY FUNCTIONS ---------
 
+// Sets up logging
+int lua_SetupLog(lua_State* L)
+{
+    std::string logpath = lua_tostring(L, 1);
+
+    std::ofstream ofs;
+    ofs.open(logpath, std::ofstream::out | std::ofstream::trunc);
+    ofs.close();
+
+    return 0;
+}
+
 // Logs a message to the sd card
 int lua_Log(lua_State* L)
 {
@@ -149,6 +161,7 @@ int lua_Log(lua_State* L)
 
 void registerUtility(lua_State* L)
 {
+    lua_register(L, "SetupLog", lua_SetupLog);
     lua_register(L, "Log", lua_Log);
 }
 
@@ -167,11 +180,6 @@ bool checkLua(lua_State* L, int result)
 // Main program entrypoint
 int main(int argc, char* argv[])
 {
-    // Initialization code can go here.
-    std::ofstream ofs;
-    ofs.open("sdmc:/test.log", std::ofstream::out | std::ofstream::trunc);
-    ofs.close();
-
     // Open new Lua VM
     L = luaL_newstate();
     luaL_openlibs(L);
