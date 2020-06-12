@@ -1,6 +1,7 @@
 local tiger = {}
 
 tiger.fileext = "tig"
+nxtas.multiplayer = true
 
 local buttons = {
     A       = 1 << 0,
