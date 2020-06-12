@@ -134,7 +134,7 @@ function nxtas.runMuliplayerTas(filenames, controllers)
     if rawlen(filenames) ~= rawlen(controllers) then
         error("filenames and controllers were not the same size")
     end
-    local numPlayers = rawlen(filenames)
+    local numPlayers = rawlen(filenames) --should do a check here to make sure we dont add any more controllers than allowed
 
     local display = vi_OpenDefaultDisplay()
     local vsync_event = vi_GetDisplayVsyncEvent(display)

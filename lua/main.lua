@@ -89,6 +89,22 @@ while true do
             Log("Error occured (script12): " .. err)
         end
 
+    elseif hid_KeyboardDown(0x1e) then
+        if tas.multiplayer then
+            local controllers = {}
+            local filenames = { root .. "scriptP1." .. fileext, root .. "scriptP2." .. fileext }
+            controllers[1] = hiddbg_AttachController(colors.rgb(0, 0, 0), colors.rgb(255, 255, 255), colors.rgb(255, 255, 255), colors.rgb(255, 255, 255))
+            controllers[2] = hiddbg_AttachController(colors.rgb(255, 255, 255), colors.rgb(0, 0, 0), colors.rgb(0, 0, 0), colors.rgb(0, 0, 0))
+
+            local good, err = pcall(tas.runMuliplayerTas, filenames, controllers)
+            if not good then
+                Log("Error occured (multiplayer): " .. err)
+            end
+
+            hiddbg_DetachController(controllers[1])
+            hiddbg_DetachController(controllers[2])
+        end
+
     end
     svc_SleepThread(6250000)
 end
