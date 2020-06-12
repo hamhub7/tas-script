@@ -1,5 +1,4 @@
 #include "lua_hiddbg.h"
-#include <string>
 
 void registerHIDDBG(lua_State* L)
 {
@@ -8,6 +7,7 @@ void registerHIDDBG(lua_State* L)
     lua_register(L, "hiddbg_IsControllerAttached", lua_hiddbg_IsControllerAttached);
     lua_register(L, "hiddbg_SetButtons", lua_hiddbg_SetButtons);
     lua_register(L, "hiddbg_SetJoystick", lua_hiddbg_SetJoystick);
+    lua_register(L, "hiddbg_ChangeControllerColor", lua_hiddbg_ChangeControllerColor);
 }
 
 // Returns a pro controller connected using bluetooth, accepting arguments for the bodyColor then buttonsColor then gripLColor then gripRcolor
@@ -141,6 +141,27 @@ int lua_hiddbg_SetJoystick(lua_State* L)
         std::size_t len = std::snprintf(nullptr, 0, "Error setting joystick state: %#x", rc);
         char error[len+1];
         std::sprintf(error, "Error setting joystick state: %#x", rc);
+        lua_pushstring(L, error);
+        lua_error(L);
+    }
+
+    return 0;
+}
+
+// Update controller color (given ccontroller, then the 4 colors)
+int lua_hiddbg_ChangeControllerColor(lua_State* L)
+{
+    u32 buttonsColor = lua_tointeger(L, -1);
+    u32 bodyColor = lua_tointeger(L, -2);
+
+    Controller* controller = reinterpret_cast<Controller *>(lua_touserdata(L, -3));
+    
+    Result rc = hiddbgUpdateControllerColor(bodyColor, buttonsColor, controller->handle);
+    if(R_FAILED(rc))
+    {
+        std::size_t len = std::snprintf(nullptr, 0, "Error setting color big sad: %#x", rc);
+        char error[len+1];
+        std::sprintf(error, "Error setting color big sad: %#x", rc);
         lua_pushstring(L, error);
         lua_error(L);
     }

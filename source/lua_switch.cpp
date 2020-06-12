@@ -1,5 +1,4 @@
 #include "lua_switch.h"
-#include <fstream>
 
 void registerSwitch(lua_State* L)
 {

@@ -1,5 +1,4 @@
 #include "lua_vi.h"
-#include <fstream>
 
 void registerVI(lua_State* L)
 {

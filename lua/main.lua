@@ -12,7 +12,7 @@ local gripRColor = colors.rgb(249, 81, 139)
 controller = nil
 while true do
     hid_ScanInput()
-    if hid_KeyboardDown(hid.KeyboardScancode.Equals) and not hiddbg_IsControllerAttached(controller) then --EQUALS
+    if hid_KeyboardDown(hid.KeyboardScancode.Equal) and not hiddbg_IsControllerAttached(controller) then --EQUALS
         controller = hiddbg_AttachController(bodyColor, buttonsColor, gripLColor, gripRColor)
 
     elseif hid_KeyboardDown(hid.KeyboardScancode.Minus) and hiddbg_IsControllerAttached(controller) then --MINUS

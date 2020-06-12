@@ -1,6 +1,7 @@
 #pragma once
 
 #include <switch.h>
+#include <string>
 extern "C"
 {
 #include "lua535/lua.h"

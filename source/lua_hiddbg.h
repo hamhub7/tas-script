@@ -2,6 +2,7 @@
 
 #include <switch.h>
 #include <cstring>
+#include <string>
 extern "C"
 {
 #include "lua535/lua.h"
@@ -22,3 +23,4 @@ int lua_hiddbg_DetachController(lua_State* L);
 int lua_hiddbg_IsControllerAttached(lua_State* L);
 int lua_hiddbg_SetButtons(lua_State* L);
 int lua_hiddbg_SetJoystick(lua_State* L);
+int lua_hiddbg_ChangeControllerColor(lua_State* L);
