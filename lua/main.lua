@@ -1,4 +1,4 @@
-tas = require "nxtas"
+tas = require "lib/nxtas"
 colors = require "colors"
 local fileext = tas.fileext
 local root = "sdmc:/scripts/"
