@@ -12,3 +12,4 @@ void registerHID(lua_State* L);
 
 int lua_hid_ScanInput(lua_State* L);
 int lua_hid_KeyboardDown(lua_State* L);
+int lua_hid_MouseDown(lua_State* L);
