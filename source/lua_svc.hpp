@@ -3,6 +3,7 @@
 #include <switch.h>
 #include <cstring>
 #include <string>
+#include <vector>
 extern "C"
 {
 #include "lua535/lua.h"

@@ -1,4 +1,5 @@
 #include "lua_svc.hpp"
+#include <fstream>
 
 void registerSVC(lua_State* L)
 {
@@ -16,21 +17,54 @@ int lua_svc_SleepThread(lua_State* L)
     return 0;
 }
 
-// Takes a 2 arguments, first a main address, then an array of offsets. This function will grab the value at the main address, then 
+// Takes a 2 arguments, first a main address, then an array of offsets. This function will grab the value at [[[main address + offset 1] + offset 2] + offset 3] etc...
 int lua_svc_ReadMemory(lua_State* L)
 {
-    int numOffsets = lua_rawlen(L, -1);
-
-    u64 offsets[numOffsets];
-    for(int i = 0; i < numOffsets; i++)
+    std::vector<u64> offsets;
+    if(!lua_isnil(L, -1))
     {
-        lua_pushinteger(L, i+1);
-        lua_gettable(L, -2);
-        offsets[i] = lua_tointeger(L, -1);
-        lua_pop(L, 1);
-    }
+        lua_pushnil(L);
+        while(lua_next(L, -2))
+        {
+            offsets.push_back((u64)lua_tonumber(L, -1));
+            lua_pop(L, 1);
 
-    u64 mainAddr = lua_tointeger(L, -2);
+            std::ofstream ofs;
+            ofs.open("sdmc:/test.log", std::ofstream::out | std::ofstream::app);
+            if(ofs.is_open())
+            {
+                ofs << "offset " << offsets.back() << std::endl;
+            }
+            ofs.close();
+        }
+    }
+    else
+    {
+        std::ofstream ofs;
+        ofs.open("sdmc:/test.log", std::ofstream::out | std::ofstream::app);
+        if(ofs.is_open())
+        {
+            ofs << "nil offsets" << std::endl;
+        }
+        ofs.close();
+    }
+    
+    u64 size = lua_tointeger(L, -2);
+    std::ofstream ofs;
+    ofs.open("sdmc:/test.log", std::ofstream::out | std::ofstream::app);
+    if(ofs.is_open())
+    {
+        ofs << "size " << size << std::endl;
+    }
+    ofs.close();
+
+    u64 mainAddr = lua_tointeger(L, -3);
+    ofs.open("sdmc:/test.log", std::ofstream::out | std::ofstream::app);
+    if(ofs.is_open())
+    {
+        ofs << "main " << mainAddr << std::endl;
+    }
+    ofs.close();
 
     u64 pid;
     Result rc = pmdmntGetApplicationProcessId(&pid);
@@ -55,10 +89,39 @@ int lua_svc_ReadMemory(lua_State* L)
     }
 
     u64 current = mainAddr;
-    for(int i = 0; i < numOffsets; i++)
+    for(u64 i = 0; i < offsets.size(); i++)
     {
+        std::ofstream ofs;
+        ofs.open("sdmc:/test.log", std::ofstream::out | std::ofstream::app);
+        if(ofs.is_open())
+        {
+            ofs << "offset " << offsets[i] << " back " << offsets.back() << std::endl;
+        }
+        ofs.close();
+
+        u64 readSize = 0x8; // Size of an address
+        if(&offsets[i] == &offsets.back())
+        {
+            std::ofstream ofs;
+            ofs.open("sdmc:/test.log", std::ofstream::out | std::ofstream::app);
+            if(ofs.is_open())
+            {
+                ofs << "in there pogchammo " << size << std::endl;
+            }
+            ofs.close();
+
+            readSize = size;
+        }
+
+        ofs.open("sdmc:/test.log", std::ofstream::out | std::ofstream::app);
+        if(ofs.is_open())
+        {
+            ofs << "reading " << current + offsets[i] << std::endl;
+        }
+        ofs.close();
+
         u64 buffer;
-        rc = svcReadDebugProcessMemory(&buffer, debugHandle, current + offsets[i], 0x1);
+        rc = svcReadDebugProcessMemory(&buffer, debugHandle, current + offsets[i], readSize);
         if(R_FAILED(rc))
         {
             std::size_t len = std::snprintf(nullptr, 0, "Error reading memory addr %#lx: %#x",current, rc);
@@ -68,15 +131,22 @@ int lua_svc_ReadMemory(lua_State* L)
             lua_error(L);
         }
 
+        ofs.open("sdmc:/test.log", std::ofstream::out | std::ofstream::app);
+        if(ofs.is_open())
+        {
+            ofs << "read " << buffer << std::endl;
+        }
+        ofs.close();
+
         current = buffer;
     }
 
-    rc = svcTerminateDebugProcess(debugHandle);
+    rc = svcCloseHandle(debugHandle);
     if(R_FAILED(rc))
     {
-        std::size_t len = std::snprintf(nullptr, 0, "Error terminating debug process: %#x", rc);
+        std::size_t len = std::snprintf(nullptr, 0, "Error closing debug handle: %#x", rc);
         char error[len+1];
-        std::sprintf(error, "Error terminating debug process: %#x", rc);
+        std::sprintf(error, "Error closing debug handle: %#x", rc);
         lua_pushstring(L, error);
         lua_error(L);
     }
@@ -101,7 +171,7 @@ int lua_svc_GetMainAddr(lua_State* L)
     }
 
     LoaderModuleInfo procModules[2];
-    s32 numModules;
+    s32 numModules = 0;
     rc = ldrDmntGetProcessModuleInfo(pid, procModules, 2, &numModules);
     if(R_FAILED(rc))
     {
