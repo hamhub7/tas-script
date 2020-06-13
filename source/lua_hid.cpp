@@ -19,6 +19,10 @@ int lua_hid_ScanInput(lua_State* L)
 int lua_hid_KeyboardDown(lua_State* L)
 {
     HidKeyboardScancode key = (HidKeyboardScancode)lua_tointeger(L, -1);
+
+    int n = lua_gettop(L);
+    lua_pop(L, n);
+
     bool isDown = hidKeyboardDown(key);
     lua_pushboolean(L, isDown);
 
@@ -29,6 +33,10 @@ int lua_hid_KeyboardDown(lua_State* L)
 int lua_hid_MouseDown(lua_State* L)
 {
     HidMouseButton key = (HidMouseButton)lua_tointeger(L, -1);
+
+    int n = lua_gettop(L);
+    lua_pop(L, n);
+
     u64 mDown = hidMouseButtonsDown();
     lua_pushboolean(L, mDown & key);
 

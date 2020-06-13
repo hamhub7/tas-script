@@ -12,6 +12,10 @@ void registerSVC(lua_State* L)
 int lua_svc_SleepThread(lua_State* L)
 {
     int nanoseconds = lua_tointeger(L, -1);
+
+    int n = lua_gettop(L);
+    lua_pop(L, n);
+
     svcSleepThread(nanoseconds);
 
     return 0;
@@ -34,6 +38,9 @@ int lua_svc_ReadMemory(lua_State* L)
     u64 size = lua_tointeger(L, -2);
 
     u64 mainAddr = lua_tointeger(L, -3);
+
+    int n = lua_gettop(L);
+    lua_pop(L, n);
 
     u64 pid;
     Result rc = pmdmntGetApplicationProcessId(&pid);

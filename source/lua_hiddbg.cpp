@@ -17,6 +17,9 @@ int lua_hiddbg_AttachController(lua_State* L)
     u32 buttonsColor = lua_tointeger(L, -3);
     u32 bodyColor = lua_tointeger(L, -4);
 
+    int n = lua_gettop(L);
+    lua_pop(L, n);
+
     HiddbgHdlsDeviceInfo device = { 0 };
     device.deviceType = HidDeviceType_FullKey3;
     device.npadInterfaceType = NpadInterfaceType_Bluetooth;
@@ -58,6 +61,9 @@ int lua_hiddbg_DetachController(lua_State* L)
 {
     Controller* controller = reinterpret_cast<Controller *>(lua_touserdata(L, -1));
 
+    int n = lua_gettop(L);
+    lua_pop(L, n);
+
     Result rc = hiddbgDetachHdlsVirtualDevice(controller->handle);
     if (R_FAILED(rc))
     {
@@ -75,6 +81,10 @@ int lua_hiddbg_DetachController(lua_State* L)
 int lua_hiddbg_IsControllerAttached(lua_State* L)
 {
     Controller* controller = reinterpret_cast<Controller *>(lua_touserdata(L, -1));
+
+    int n = lua_gettop(L);
+    lua_pop(L, n);
+
     if(controller == nullptr)
     {
         lua_pushboolean(L, false);
@@ -106,6 +116,9 @@ int lua_hiddbg_SetButtons(lua_State* L)
 
     Controller* controller = reinterpret_cast<Controller *>(lua_touserdata(L, -2));
 
+    int n = lua_gettop(L);
+    lua_pop(L, n);
+
     controller->state.buttons = buttons;
 
     Result rc = hiddbgSetHdlsState(controller->handle, &controller->state);
@@ -130,6 +143,9 @@ int lua_hiddbg_SetJoystick(lua_State* L)
     int index = lua_tointeger(L, -3);
 
     Controller* controller = reinterpret_cast<Controller *>(lua_touserdata(L, -4));
+
+    int n = lua_gettop(L);
+    lua_pop(L, n);
 
     controller->state.joysticks[index-1].dx = x;
     controller->state.joysticks[index-1].dy = y;

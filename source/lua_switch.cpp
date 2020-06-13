@@ -12,6 +12,10 @@ void registerSwitch(lua_State* L)
 int lua_FatalThrow(lua_State* L)
 {
     u32 errorCode = lua_tointeger(L, -1);
+
+    int n = lua_gettop(L);
+    lua_pop(L, n);
+
     fatalThrow(errorCode);
 
     return 0;
@@ -22,7 +26,10 @@ int lua_EventWait(lua_State* L)
 {
     u64 timeout = lua_tointeger(L, -1);
 
-    Event* event = reinterpret_cast<Event *>(lua_touserdata(L, -1));
+    Event* event = reinterpret_cast<Event *>(lua_touserdata(L, -2));
+
+    int n = lua_gettop(L);
+    lua_pop(L, n);
 
     Result rc = eventWait(event, timeout);
     if(R_FAILED(rc))
@@ -42,6 +49,9 @@ int lua_EventWaitMax(lua_State* L)
 {
     Event* event = reinterpret_cast<Event *>(lua_touserdata(L, -1));
 
+    int n = lua_gettop(L);
+    lua_pop(L, n);
+
     Result rc = eventWait(event, UINT64_MAX);
     if(R_FAILED(rc))
     {
@@ -59,6 +69,9 @@ int lua_EventWaitMax(lua_State* L)
 int lua_EventClose(lua_State* L)
 {
     Event* event = reinterpret_cast<Event *>(lua_touserdata(L, -1));
+
+    int n = lua_gettop(L);
+    lua_pop(L, n);
 
     eventClose(event);
 

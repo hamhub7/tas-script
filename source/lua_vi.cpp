@@ -12,6 +12,9 @@ int lua_vi_OpenDefaultDisplay(lua_State* L)
 {
     ViDisplay* disp = reinterpret_cast<ViDisplay *>(lua_newuserdata(L, sizeof(ViDisplay)));
 
+    int n = lua_gettop(L);
+    lua_pop(L, n);
+
     Result rc = viOpenDefaultDisplay(disp);
     if(R_FAILED(rc))
     {
@@ -30,6 +33,9 @@ int lua_vi_CloseDisplay(lua_State* L)
 {
     ViDisplay* disp = reinterpret_cast<ViDisplay *>(lua_touserdata(L, -1));
 
+    int n = lua_gettop(L);
+    lua_pop(L, n);
+
     Result rc = viCloseDisplay(disp);
     if(R_FAILED(rc))
     {
@@ -47,6 +53,9 @@ int lua_vi_CloseDisplay(lua_State* L)
 int lua_vi_GetDisplayVsyncEvent(lua_State* L)
 {
     ViDisplay* disp = reinterpret_cast<ViDisplay *>(lua_touserdata(L, -1));
+
+    int n = lua_gettop(L);
+    lua_pop(L, n);
 
     Event* vsync_event = reinterpret_cast<Event *>(lua_newuserdata(L, sizeof(Event)));
 
