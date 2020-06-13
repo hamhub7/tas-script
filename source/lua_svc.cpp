@@ -21,7 +21,7 @@ int lua_svc_SleepThread(lua_State* L)
     return 0;
 }
 
-// Takes a 2 arguments, first a main address, then an array of offsets. This function will grab the value at [[[main address + offset 1] + offset 2] + offset 3] etc...
+// Takes a 2 arguments, first a main address, then an array of offsets, then a final size. This function will grab the value at [[[main address + offset 1] + offset 2] + offset 3] etc... with the size specified for the final value
 int lua_svc_ReadMemory(lua_State* L)
 {
     u64 size = lua_tointeger(L, -1);
