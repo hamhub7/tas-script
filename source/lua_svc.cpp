@@ -59,6 +59,16 @@ int lua_svc_ReadMemory(lua_State* L)
         current = buffer;
     }
 
+    rc = svcTerminateDebugProcess(debugHandle);
+    if(R_FAILED(rc))
+    {
+        std::size_t len = std::snprintf(nullptr, 0, "Error terminating debug process: %#x", rc);
+        char error[len+1];
+        std::sprintf(error, "Error terminating debug process: %#x", rc);
+        lua_pushstring(L, error);
+        lua_error(L);
+    }
+
     lua_pushinteger(L, current);
 
     return 1;
