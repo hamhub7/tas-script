@@ -24,6 +24,9 @@ int lua_svc_SleepThread(lua_State* L)
 // Takes a 2 arguments, first a main address, then an array of offsets. This function will grab the value at [[[main address + offset 1] + offset 2] + offset 3] etc...
 int lua_svc_ReadMemory(lua_State* L)
 {
+    u64 size = lua_tointeger(L, -1);
+    lua_pop(L, 1);
+    
     std::vector<u64> offsets;
     if(!lua_isnil(L, -1))
     {
@@ -34,10 +37,8 @@ int lua_svc_ReadMemory(lua_State* L)
             lua_pop(L, 1);
         }
     }
-    
-    u64 size = lua_tointeger(L, -2);
 
-    u64 mainAddr = lua_tointeger(L, -3);
+    u64 mainAddr = lua_tointeger(L, -2);
 
     int n = lua_gettop(L);
     lua_pop(L, n);
