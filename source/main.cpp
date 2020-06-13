@@ -64,6 +64,10 @@ void __attribute__((weak)) __appInit(void)
     if (R_FAILED(rc))
         fatalThrow(MAKERESULT(Module_Libnx, LibnxError_InitFail_SM));
 
+    rc = ldrDmntInitialize();
+    if(R_FAILED(rc))
+        fatalThrow(rc);
+
     rc = setsysInitialize();
     if (R_SUCCEEDED(rc)) {
         SetSysFirmwareVersion fw;
@@ -72,7 +76,6 @@ void __attribute__((weak)) __appInit(void)
             hosversionSet(MAKEHOSVERSION(fw.major, fw.minor, fw.micro));
         setsysExit();
     }
-
 
     // HID
     rc = hidInitialize();
@@ -99,6 +102,10 @@ void __attribute__((weak)) __appInit(void)
     // time
     rc = timeInitialize();
     if (R_FAILED(rc))
+        fatalThrow(rc);
+
+    rc = pmdmntInitialize();
+    if(R_FAILED(rc))
         fatalThrow(rc);
 
     // Attach Work Buffer
