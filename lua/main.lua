@@ -1,4 +1,4 @@
-tas = require "lib/nxtas"
+tas = require "lib/nxtas" --Edit this to change the scripting language used
 colors = require "sys/colors"
 hid = require "sys/hidenum"
 local fileext = tas.fileext
