@@ -28,43 +28,12 @@ int lua_svc_ReadMemory(lua_State* L)
         {
             offsets.push_back((u64)lua_tonumber(L, -1));
             lua_pop(L, 1);
-
-            std::ofstream ofs;
-            ofs.open("sdmc:/test.log", std::ofstream::out | std::ofstream::app);
-            if(ofs.is_open())
-            {
-                ofs << "offset " << offsets.back() << std::endl;
-            }
-            ofs.close();
         }
-    }
-    else
-    {
-        std::ofstream ofs;
-        ofs.open("sdmc:/test.log", std::ofstream::out | std::ofstream::app);
-        if(ofs.is_open())
-        {
-            ofs << "nil offsets" << std::endl;
-        }
-        ofs.close();
     }
     
     u64 size = lua_tointeger(L, -2);
-    std::ofstream ofs;
-    ofs.open("sdmc:/test.log", std::ofstream::out | std::ofstream::app);
-    if(ofs.is_open())
-    {
-        ofs << "size " << size << std::endl;
-    }
-    ofs.close();
 
     u64 mainAddr = lua_tointeger(L, -3);
-    ofs.open("sdmc:/test.log", std::ofstream::out | std::ofstream::app);
-    if(ofs.is_open())
-    {
-        ofs << "main " << mainAddr << std::endl;
-    }
-    ofs.close();
 
     u64 pid;
     Result rc = pmdmntGetApplicationProcessId(&pid);
@@ -91,34 +60,11 @@ int lua_svc_ReadMemory(lua_State* L)
     u64 current = mainAddr;
     for(u64 i = 0; i < offsets.size(); i++)
     {
-        std::ofstream ofs;
-        ofs.open("sdmc:/test.log", std::ofstream::out | std::ofstream::app);
-        if(ofs.is_open())
-        {
-            ofs << "offset " << offsets[i] << " back " << offsets.back() << std::endl;
-        }
-        ofs.close();
-
         u64 readSize = 0x8; // Size of an address
         if(&offsets[i] == &offsets.back())
         {
-            std::ofstream ofs;
-            ofs.open("sdmc:/test.log", std::ofstream::out | std::ofstream::app);
-            if(ofs.is_open())
-            {
-                ofs << "in there pogchammo " << size << std::endl;
-            }
-            ofs.close();
-
             readSize = size;
         }
-
-        ofs.open("sdmc:/test.log", std::ofstream::out | std::ofstream::app);
-        if(ofs.is_open())
-        {
-            ofs << "reading " << current + offsets[i] << std::endl;
-        }
-        ofs.close();
 
         u64 buffer;
         rc = svcReadDebugProcessMemory(&buffer, debugHandle, current + offsets[i], readSize);
@@ -130,13 +76,6 @@ int lua_svc_ReadMemory(lua_State* L)
             lua_pushstring(L, error);
             lua_error(L);
         }
-
-        ofs.open("sdmc:/test.log", std::ofstream::out | std::ofstream::app);
-        if(ofs.is_open())
-        {
-            ofs << "read " << buffer << std::endl;
-        }
-        ofs.close();
 
         current = buffer;
     }
