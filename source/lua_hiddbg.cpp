@@ -1,4 +1,4 @@
-#include "lua_hiddbg.h"
+#include "lua_hiddbg.hpp"
 
 void registerHIDDBG(lua_State* L)
 {

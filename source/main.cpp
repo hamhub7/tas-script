@@ -17,11 +17,11 @@ extern "C"
 }
 
 // Include headers from other parts of the program
-#include "lua_switch.h"
-#include "lua_svc.h"
-#include "lua_hid.h"
-#include "lua_hiddbg.h"
-#include "lua_vi.h"
+#include "lua_switch.hpp"
+#include "lua_svc.hpp"
+#include "lua_hid.hpp"
+#include "lua_hiddbg.hpp"
+#include "lua_vi.hpp"
 
 lua_State* L;
 

@@ -1,4 +1,4 @@
-#include "lua_hid.h"
+#include "lua_hid.hpp"
 
 void registerHID(lua_State* L)
 {

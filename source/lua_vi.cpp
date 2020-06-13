@@ -1,4 +1,4 @@
-#include "lua_vi.h"
+#include "lua_vi.hpp"
 
 void registerVI(lua_State* L)
 {

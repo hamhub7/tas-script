@@ -1,4 +1,4 @@
-#include "lua_switch.h"
+#include "lua_switch.hpp"
 
 void registerSwitch(lua_State* L)
 {
