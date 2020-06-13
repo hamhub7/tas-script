@@ -31,8 +31,19 @@ int lua_svc_ReadMemory(lua_State* L)
 
     u64 mainAddr = lua_tointeger(L, -2);
 
+    u64 pid;
+    Result rc = pmdmntGetApplicationProcessId(&pid);
+    if(R_FAILED(rc))
+    {
+        std::size_t len = std::snprintf(nullptr, 0, "Error getting process id: %#x", rc);
+        char error[len+1];
+        std::sprintf(error, "Error getting process id: %#x", rc);
+        lua_pushstring(L, error);
+        lua_error(L);
+    }
+
     Handle debugHandle;
-    Result rc = svcDebugActiveProcess(&debugHandle, 0);
+    rc = svcDebugActiveProcess(&debugHandle, pid);
     if(R_FAILED(rc))
     {
         std::size_t len = std::snprintf(nullptr, 0, "Error debugging process: %#x", rc);
