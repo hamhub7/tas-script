@@ -14,3 +14,4 @@ void registerSVC(lua_State* L);
 
 int lua_svc_SleepThread(lua_State* L);
 int lua_svc_ReadMemory(lua_State* L);
+int lua_svc_GetMainAddr(lua_State* L);
