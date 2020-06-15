@@ -229,5 +229,6 @@ sd: $(BUILD) $(OUTPUT).nsp FORCE
 	@cp -f $(TOPDIR)/toolbox.json $(TOPDIR)/sd/atmosphere/contents/4200736372402948/toolbox.json
 	@rm -fr $(TOPDIR)/sd/script
 	@cp -fr $(TOPDIR)/lua $(TOPDIR)/sd/script
-	@zip -r tas-script.zip sd
+	@rm -f tas-script.zip
+	@zip -rq tas-script.zip sd
 FORCE:
