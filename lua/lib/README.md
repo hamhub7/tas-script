@@ -34,4 +34,4 @@ Tell the user:
 
 ## Help
 If you need a starting point for your library, check out `nxtas.lua` and `tiger.lua`. nxtas uses absolute frame numbers and tiger uses frame delays, so if you want to base your library off either one of those systems, you can simply change the `scanLine` function
-For help coding in lua, check out (Programming in Lua)[https://www.lua.org/pil/contents.html] or the [Lua Documentation](https://www.lua.org/manual/5.3/)
+For help coding in lua, check out [Programming in Lua](https://www.lua.org/pil/contents.html) or the [Lua Documentation](https://www.lua.org/manual/5.3/)
