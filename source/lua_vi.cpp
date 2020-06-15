@@ -12,9 +12,6 @@ int lua_vi_OpenDefaultDisplay(lua_State* L)
 {
     ViDisplay* disp = reinterpret_cast<ViDisplay *>(lua_newuserdata(L, sizeof(ViDisplay)));
 
-    int n = lua_gettop(L);
-    lua_pop(L, n);
-
     Result rc = viOpenDefaultDisplay(disp);
     if(R_FAILED(rc))
     {
