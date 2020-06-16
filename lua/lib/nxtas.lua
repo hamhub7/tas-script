@@ -1,7 +1,7 @@
 local nxtas = {}
 
 nxtas.fileext = "txt"
-nxtas.multiplayer = false
+nxtas.multiplayer = true
 
 local buttons = {
     A       = 1 << 0,
@@ -128,6 +128,69 @@ function nxtas.runTas(filename, controller)
     vi_CloseDisplay(display)
     clearInputs(controller)
     io.close(file)
+end
+
+function nxtas.runMultiplayerTas(root, num, ext, controllers, playersNum)
+    if #controllers < playersNum then
+        error("Less controllers than players requested! Discontinuing...")
+    end
+    local files = {}
+    local shouldRead = {}
+    local readFiles = {}
+    local path = nil
+    for i=1,playersNum do
+        path = root .. "script" .. tostring(num) .. "-" .. tostring(i) .. "." .. ext
+        local f = io.open(path)
+        if not f then 
+            error("file " .. path .. " could not be opened")
+        end
+        table.insert(files, f)
+        table.insert(shouldRead, true)
+        table.insert(readFiles, true)
+    end
+
+    local display = vi_OpenDefaultDisplay()
+    local vsync_event = vi_GetDisplayVsyncEvent(display)
+
+    local frame = 0
+    local controlMsgs = {}
+    local done = 0
+    while done < playersNum do
+        for c=1,playersNum do 
+            if shouldRead[c] then 
+                if readFiles[c] then
+                    io.input(files[c])
+                    local line = io.read()
+                    if line == nil then
+                        shouldRead[c] = false
+                        done = done + 1
+                    end
+                    if shouldRead[c] then -- we have to include checking for this because it could have changed since the loop started
+                        controlMsgs[c] = scanLine(line)
+                    end
+                end
+
+                if shouldRead[c] then
+                    if controlMsgs[c] ~= nil and controlMsgs[c]["frame"] == frame then
+                        runLine(controlMsgs[c], controllers[c])
+                        readFiles[c] = true
+                    else
+                        clearInputs(controllers[c])
+                        readFiles[c] = false
+                    end
+                end
+            end
+        end
+        EventWaitMax(vsync_event)
+        frame = frame + 1
+    end
+
+    EventClose(vsync_event)
+    vi_CloseDisplay(display)
+    for f=1,playersNum do 
+        io.close(files[f])
+        clearInputs(controllers[f])
+    end
 end
 
 return nxtas
