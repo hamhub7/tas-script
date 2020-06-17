@@ -8,10 +8,10 @@ Support me on [Patreon](https://www.patreon.com/aaronhh) or [PayPal](https://www
 Make a pull request!
 
 ## Keybinds
-`=`: Add a virtual controller (The switch can only support 8 controllers maximum, going over this will crash.)
-`-`: Remove a virtual controller
-`Q`: Press `A` on the first virtual controller
-`W`: Press `L` and `R` on each controller, sequentially
+`=`: Add a virtual controller (The switch can only support 8 controllers maximum, going over this will crash.)  
+`-`: Remove a virtual controller  
+`Q`: Press `A` on the first virtual controller  
+`W`: Press `L` and `R` on each controller, sequentially  
 `F1-F12`: Run a script. By default, the program will run `script1.txt` if `F1` is pressed, `script2.txt` if `F2` is pressed, and so on. However, if more that 1 controller is attached, it will instead run multiplayer scripts. If `F1` is pressed, it will run `script1-1.txt` on the first controller, `script1-2.txt` on the second controller, and so on.
 
 ## Building from Source
