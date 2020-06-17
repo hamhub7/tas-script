@@ -130,16 +130,17 @@ function nxtas.runTas(filename, controller)
     io.close(file)
 end
 
-function nxtas.runMultiplayerTas(root, num, ext, controllers, playersNum)
-    if #controllers < playersNum then
-        error("Less controllers than players requested! Discontinuing...")
+function nxtas.runMultiplayerTas(filenames, controllers)
+    local playersNum = #filenames
+    if #controllers ~= playersNum then
+        error("Controllers not the same number as filenames! Discontinuing...")
     end
     local files = {}
     local shouldRead = {}
     local readFiles = {}
     local path = nil
     for i=1,playersNum do
-        path = root .. "script" .. tostring(num) .. "-" .. tostring(i) .. "." .. ext
+        path = filenames[i]
         local f = io.open(path)
         if not f then 
             error("file " .. path .. " could not be opened")
