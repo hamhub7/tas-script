@@ -7,6 +7,13 @@ Join our [Discord server](http://discord.gg/qeamCcV)\
 Support me on [Patreon](https://www.patreon.com/aaronhh) or [PayPal](https://www.paypal.me/aaronhamhub)\
 Make a pull request!
 
+## Keybinds
+`=`: Add a virtual controller (The switch can only support 8 controllers maximum, going over this will crash.)
+`-`: Remove a virtual controller
+`Q`: Press `A` on the first virtual controller
+`W`: Press `L` and `R` on each controller, sequentially
+`F1-F12`: Run a script. By default, the program will run `script1.txt` if `F1` is pressed, `script2.txt` if `F2` is pressed, and so on. However, if more that 1 controller is attached, it will instead run multiplayer scripts. If `F1` is pressed, it will run `script1-1.txt` on the first controller, `script1-2.txt` on the second controller, and so on.
+
 ## Building from Source
 1. [Set up the required libraries](https://switchbrew.org/wiki/Setting_up_Development_Environment)
 2. In the newly installed MSYS2, navigate to the folder you'd like to build this project in, either by opening MSYS in that directory or using the `cd` command to navigate
