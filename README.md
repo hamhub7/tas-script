@@ -19,7 +19,7 @@ Make a pull request!
 2. In the newly installed MSYS2, navigate to the folder you'd like to build this project in, either by opening MSYS in that directory or using the `cd` command to navigate
 3. `git clone https://github.com/hamhub7/tas-script.git` (You may need to install git with `pacman -S git`)
 4. `cd tas-script`
-5. `make`
+5. `make` (You may need to install make with `pacman -S make`)
 6. You should see a file called `tas-script.nsp`
 \
 \
