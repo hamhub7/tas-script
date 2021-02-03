@@ -15,9 +15,9 @@ ViDisplay lua_vi_OpenDefaultDisplay()
 }
 
 // Closes the display provided
-void lua_vi_CloseDisplay(ViDisplay& disp)
+void lua_vi_CloseDisplay(ViDisplay* disp)
 {
-    Result rc = viCloseDisplay(&disp);
+    Result rc = viCloseDisplay(disp);
     if(R_FAILED(rc))
     {
         throw string_format("Error closing display: %#x", rc);
@@ -27,11 +27,11 @@ void lua_vi_CloseDisplay(ViDisplay& disp)
 }
 
 // Takes a display and returns a vsync event from that display
-Event lua_vi_GetDisplayVsyncEvent(ViDisplay& disp)
+Event lua_vi_GetDisplayVsyncEvent(ViDisplay* disp)
 {
     Event vsync_event;
 
-    Result rc = viGetDisplayVsyncEvent(&disp, &vsync_event);
+    Result rc = viGetDisplayVsyncEvent(disp, &vsync_event);
     if(R_FAILED(rc))
     {
         throw string_format("Error getting vsync event: %#x", rc);

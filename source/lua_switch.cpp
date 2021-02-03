@@ -9,9 +9,9 @@ void lua_FatalThrow(u32 errorCode)
 }
 
 // Takes an event and a timeout and waits for it for the specific timeout
-void lua_EventWait(Event& event, u64 timeout)
+void lua_EventWait(Event* event, u64 timeout)
 {
-    Result rc = eventWait(&event, timeout);
+    Result rc = eventWait(event, timeout);
     if(R_FAILED(rc))
     {
         throw string_format("Error waiting for event: %#x", rc);
@@ -21,9 +21,9 @@ void lua_EventWait(Event& event, u64 timeout)
 }
 
 // Takes an event and waits for it for the maximum timeout
-void lua_EventWaitMax(Event& event)
+void lua_EventWaitMax(Event* event)
 {
-    Result rc = eventWait(&event, UINT64_MAX);
+    Result rc = eventWait(event, UINT64_MAX);
     if(R_FAILED(rc))
     {
         throw string_format("Error waiting for event(max): %#x", rc);
@@ -33,9 +33,9 @@ void lua_EventWaitMax(Event& event)
 }
 
 // Closes the event specified
-void lua_EventClose(Event& event)
+void lua_EventClose(Event* event)
 {
-    eventClose(&event);
+    eventClose(event);
 
     return;
 }
