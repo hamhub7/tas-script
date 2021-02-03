@@ -9,12 +9,7 @@
 // Include the main libnx system header, for Switch development
 #include <switch.h>
 
-extern "C"
-{
-#include "lua535/lua.h"
-#include "lua535/lauxlib.h"
-#include "lua535/lualib.h"
-}
+#include <sol/sol.hpp>
 
 // Include headers from other parts of the program
 #include "lua_switch.hpp"
@@ -22,8 +17,6 @@ extern "C"
 #include "lua_hid.hpp"
 #include "lua_hiddbg.hpp"
 #include "lua_vi.hpp"
-
-lua_State* L;
 
 extern "C"
 {
@@ -118,8 +111,6 @@ void __attribute__((weak)) userAppExit(void);
 
 void __attribute__((weak)) __appExit(void)
 {
-    // Close VM
-    lua_close(L);
     // Cleanup default services.
     hiddbgReleaseHdlsWorkBuffer();
     timeExit();
@@ -148,61 +139,49 @@ void logToSd(std::string message)
 // ---------- LUA UTILITY FUNCTIONS ---------
 
 // Sets up logging
-int lua_SetupLog(lua_State* L)
+void lua_SetupLog(std::string logpath)
 {
-    logpath = lua_tostring(L, 1);
-
     std::ofstream ofs;
     ofs.open(logpath, std::ofstream::out | std::ofstream::trunc);
     ofs.close();
 
-    return 0;
+    return;
 }
 
 // Logs a message to the sd card
-int lua_Log(lua_State* L)
+void lua_Log(std::string msg)
 {
-    std::string msg = lua_tostring(L, 1);
     logToSd(msg);
 
-    return 0;
+    return;
 }
 
-void registerUtility(lua_State* L)
+void registerUtility(sol::state& lua)
 {
-    lua_register(L, "SetupLog", lua_SetupLog);
-    lua_register(L, "Log", lua_Log);
-}
-
-// Checks the current result and prints an error if it failed
-bool checkLua(lua_State* L, int result)
-{
-    if(result != LUA_OK)
-    {
-        std::string errormsg = lua_tostring(L, -1);
-        logToSd(errormsg);
-        return false;
-    }
-    return true;
+    lua.set_function("SetupLog", lua_SetupLog);
+    lua.set_function("Log", lua_Log);
 }
 
 // Main program entrypoint
 int main(int argc, char* argv[])
 {
-    // Open new Lua VM
-    L = luaL_newstate();
-    luaL_openlibs(L);
+    sol::state lua;
+    lua.open_libraries(sol::lib::base);
 
     // Register Lua functions
-    registerUtility(L);
-    registerSVC(L);
-    registerHID(L);
-    registerHIDDBG(L);
-    registerVI(L);
-    registerSwitch(L);
+    registerUtility(lua);
+    registerSVC(lua);
+    registerHID(lua);
+    registerHIDDBG(lua);
+    registerVI(lua);
+    registerSwitch(lua);
 
     // Your code / main loop goes here.
-    checkLua(L, luaL_dofile(L, "sdmc:/script/boot.lua"));
+    sol::protected_function_result result = lua.script_file("sdmc:/script/boot.lua");
+    if(!result.valid()) {
+        sol::error err = result;
+        logToSd(err.what());
+    }
 
     return 0;
 }

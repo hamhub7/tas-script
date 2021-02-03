@@ -1,44 +1,28 @@
 #include "lua_hid.hpp"
 
-void registerHID(lua_State* L)
-{
-    lua_register(L, "hid_ScanInput", lua_hid_ScanInput);
-    lua_register(L, "hid_KeyboardDown", lua_hid_KeyboardDown);
-    lua_register(L, "hid_MouseDown", lua_hid_MouseDown);
-}
-
 // Scans input
-int lua_hid_ScanInput(lua_State* L)
+void lua_hid_ScanInput()
 {
     hidScanInput();
 
-    return 0;
+    return;
 }
 
 // Takes a keycode (can be found in hid.h) and returns (boolean) if that key was pressed down
-int lua_hid_KeyboardDown(lua_State* L)
+bool lua_hid_KeyboardDown(HidKeyboardScancode key)
 {
-    HidKeyboardScancode key = (HidKeyboardScancode)lua_tointeger(L, -1);
-
-    int n = lua_gettop(L);
-    lua_pop(L, n);
-
-    bool isDown = hidKeyboardDown(key);
-    lua_pushboolean(L, isDown);
-
-    return 1;
+    return hidKeyboardDown(key);
 }
 
 // Takes a keycode and returns if that mouse buttons was pressed down
-int lua_hid_MouseDown(lua_State* L)
+bool lua_hid_MouseDown(HidMouseButton key)
 {
-    HidMouseButton key = (HidMouseButton)lua_tointeger(L, -1);
+    return hidMouseButtonsDown() & key;
+}
 
-    int n = lua_gettop(L);
-    lua_pop(L, n);
-
-    u64 mDown = hidMouseButtonsDown();
-    lua_pushboolean(L, mDown & key);
-
-    return 1;
+void registerHID(sol::state& lua)
+{
+    lua.set_function("hid_ScanInput", lua_hid_ScanInput);
+    lua.set_function("hid_KeyboardDown", lua_hid_KeyboardDown);
+    lua.set_function("hid_MouseDown", lua_hid_MouseDown);
 }
