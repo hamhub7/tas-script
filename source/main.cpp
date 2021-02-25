@@ -177,7 +177,7 @@ int main(int argc, char* argv[])
     registerSwitch(lua);
 
     // Your code / main loop goes here.
-    sol::protected_function_result result = lua.script_file("sdmc:/script/boot.lua");
+    sol::protected_function_result result = lua.safe_script_file("sdmc:/script/boot.lua");
     if(!result.valid()) {
         sol::error err = result;
         logToSd(err.what());
