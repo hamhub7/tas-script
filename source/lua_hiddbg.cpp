@@ -22,7 +22,7 @@ int lua_hiddbg_AttachController(lua_State* L)
 
     HiddbgHdlsDeviceInfo device = { 0 };
     device.deviceType = HidDeviceType_FullKey3;
-    device.npadInterfaceType = NpadInterfaceType_Bluetooth;
+    device.npadInterfaceType = HidNpadInterfaceType_Bluetooth;
     device.singleColorBody = bodyColor;
     device.singleColorButtons = buttonsColor;
     device.colorLeftGrip = gripLColor;
@@ -41,7 +41,7 @@ int lua_hiddbg_AttachController(lua_State* L)
         lua_error(L);
     }
 
-    controller->state.batteryCharge = 4;
+    controller->state.battery_level = 4;
 
     rc = hiddbgSetHdlsState(controller->handle, &controller->state);
     if(R_FAILED(rc))
@@ -147,8 +147,24 @@ int lua_hiddbg_SetJoystick(lua_State* L)
     int n = lua_gettop(L);
     lua_pop(L, n);
 
-    controller->state.joysticks[index-1].dx = x;
-    controller->state.joysticks[index-1].dy = y;
+    switch (index)
+    {
+    case 1:
+        controller->state.analog_stick_l.x = x;
+        controller->state.analog_stick_l.y = y;
+        break;
+    case 2:
+        controller->state.analog_stick_r.x = x;
+        controller->state.analog_stick_r.y = y;
+        break;
+    default:
+        std::size_t len = std::snprintf(nullptr, 0, "Incorrect joystick index (1 = left, 2 = right)");
+        char error[len+1];
+        std::sprintf(error, "Incorrect joystick index (1 = left, 2 = right)");
+        lua_pushstring(L, error);
+        lua_error(L);
+        break;
+    }
 
     Result rc = hiddbgSetHdlsState(controller->handle, &controller->state);
     if(R_FAILED(rc))

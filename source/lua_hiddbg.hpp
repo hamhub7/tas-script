@@ -12,7 +12,7 @@ extern "C"
 
 typedef struct
 {
-    u64 handle;
+    HiddbgHdlsHandle handle;
     HiddbgHdlsState state;
 } Controller;
 
