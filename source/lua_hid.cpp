@@ -11,7 +11,7 @@ void lua_hid_ScanInput()
 }
 
 // Takes a keycode (can be found in hid.h) and returns (boolean) if that key was pressed down
-bool lua_hid_KeyboardDown(HidKeyboardScancode key)
+bool lua_hid_KeyboardDown(HidKeyboardKey key)
 {
     return keyboard.keyDown(key);
 }
