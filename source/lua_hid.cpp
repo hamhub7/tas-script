@@ -1,5 +1,7 @@
 #include "lua_hid.hpp"
 
+static keyPad keyboard;
+
 void registerHID(lua_State* L)
 {
     lua_register(L, "hid_ScanInput", lua_hid_ScanInput);
@@ -10,7 +12,7 @@ void registerHID(lua_State* L)
 // Scans input
 int lua_hid_ScanInput(lua_State* L)
 {
-    hidScanInput();
+    keyboard.update();
 
     return 0;
 }
@@ -18,12 +20,12 @@ int lua_hid_ScanInput(lua_State* L)
 // Takes a keycode (can be found in hid.h) and returns (boolean) if that key was pressed down
 int lua_hid_KeyboardDown(lua_State* L)
 {
-    HidKeyboardScancode key = (HidKeyboardScancode)lua_tointeger(L, -1);
+    HidKeyboardKey key = (HidKeyboardKey)lua_tointeger(L, -1);
 
     int n = lua_gettop(L);
     lua_pop(L, n);
 
-    bool isDown = hidKeyboardDown(key);
+    bool isDown = keyboard.keyDown(key);
     lua_pushboolean(L, isDown);
 
     return 1;
@@ -37,7 +39,7 @@ int lua_hid_MouseDown(lua_State* L)
     int n = lua_gettop(L);
     lua_pop(L, n);
 
-    u64 mDown = hidMouseButtonsDown();
+    u64 mDown = 0;//hidMouseButtonsDown();
     lua_pushboolean(L, mDown & key);
 
     return 1;

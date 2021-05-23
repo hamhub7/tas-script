@@ -112,6 +112,8 @@ void __attribute__((weak)) __appInit(void)
     rc = hiddbgAttachHdlsWorkBuffer();
     if (R_FAILED(rc))
         fatalThrow(rc);
+
+    hidInitializeKeyboard();
 }
 
 void __attribute__((weak)) userAppExit(void);

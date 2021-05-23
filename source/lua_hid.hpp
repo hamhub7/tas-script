@@ -8,6 +8,8 @@ extern "C"
 #include "lua535/lualib.h"
 }
 
+#include "keyPad.hpp"
+
 void registerHID(lua_State* L);
 
 int lua_hid_ScanInput(lua_State* L);
