@@ -2,7 +2,7 @@
 
 void keyPad::update()
 {
-    currState = oldState;
+    oldState = currState;
     hidGetKeyboardStates(&currState, 1);
 }
 
