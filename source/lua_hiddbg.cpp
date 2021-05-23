@@ -11,7 +11,7 @@ Controller lua_hiddbg_AttachController(u32 bodyColor, u32 buttonsColor, u32 grip
     device.colorLeftGrip = gripLColor;
     device.colorRightGrip = gripRColor;
 
-    Controller controller;
+    Controller controller = {0};
     
     Result rc = hiddbgAttachHdlsVirtualDevice(&controller.handle, &device);
     if (R_FAILED(rc))
