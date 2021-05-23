@@ -48,6 +48,8 @@ the build system, or the command line options of your compiler.
 
 */
 
+#include <limits>
+
 // end of sol/config.hpp
 
 #endif // SOL_SINGLE_CONFIG_HPP

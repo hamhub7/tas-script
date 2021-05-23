@@ -24,7 +24,7 @@ Controller lua_hiddbg_AttachController(u32 bodyColor, u32 buttonsColor, u32 grip
     rc = hiddbgSetHdlsState(controller.handle, &controller.state);
     if(R_FAILED(rc))
     {
-        throw string_format("Error setting controller state: %#x", rc);;
+        throw string_format("Error setting controller state: %#x", rc);
     }
 
     return controller;

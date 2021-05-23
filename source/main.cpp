@@ -124,13 +124,13 @@ void __attribute__((weak)) __appExit(void)
     smExit();
 }
 
-std::string logpath = "sdmc:/test.log";
+std::string filepath = "sdmc:/test.log";
 
 // Outputs to sdmc/test.log
 void logToSd(std::string message)
 {
     std::ofstream ofs;
-    ofs.open(logpath, std::ofstream::out | std::ofstream::app);
+    ofs.open(filepath, std::ofstream::out | std::ofstream::app);
     if(ofs.is_open())
     {
         ofs << message << std::endl;
@@ -144,6 +144,8 @@ void logToSd(std::string message)
 void lua_SetupLog(std::string logpath)
 {
     std::ofstream ofs;
+    
+    filepath = logpath;
     ofs.open(logpath, std::ofstream::out | std::ofstream::trunc);
     ofs.close();
 
@@ -168,7 +170,7 @@ void registerUtility(sol::state& lua)
 int main(int argc, char* argv[])
 {
     sol::state lua;
-    lua.open_libraries(sol::lib::base);
+    lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::table);
 
     // Register Lua functions
     registerUtility(lua);
