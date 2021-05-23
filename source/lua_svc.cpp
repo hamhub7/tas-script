@@ -82,7 +82,7 @@ int lua_svc_MapProcessMemory(lua_State* L)
         lua_error(L);
     }
 
-    void* bruh;
+    void* bruh = nullptr;
     rc = svcMapProcessMemory(bruh, processHandle, 0, 0);
     if(R_FAILED(rc))
     {

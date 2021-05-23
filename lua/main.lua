@@ -4,10 +4,10 @@ hid = require "sys/hidenum"
 local fileext = tas.fileext
 local root = "sdmc:/scripts/"
 
-local bodyColor = colors.rgb(43, 43, 43)
+local bodyColor = colors.rgb(4, 156, 216)
 local buttonsColor = colors.rgb(0, 0, 0)
-local gripLColor = colors.rgb(20, 184, 82)
-local gripRColor = colors.rgb(249, 81, 139)
+local gripLColor = colors.rgb(229, 37, 33)
+local gripRColor = colors.rgb(229, 37, 3353)
 
 function waitFrames(frames)
     local display = vi_OpenDefaultDisplay()
