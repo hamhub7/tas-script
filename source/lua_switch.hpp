@@ -2,16 +2,7 @@
 
 #include <switch.h>
 #include <string>
-extern "C"
-{
-#include "lua535/lua.h"
-#include "lua535/lauxlib.h"
-#include "lua535/lualib.h"
-}
+#include <sol/sol.hpp>
+#include "format.hpp"
 
-void registerSwitch(lua_State* L);
-
-int lua_FatalThrow(lua_State* L);
-int lua_EventWait(lua_State* L);
-int lua_EventWaitMax(lua_State* L);
-int lua_EventClose(lua_State* L);
+void registerSwitch(sol::state& lua);

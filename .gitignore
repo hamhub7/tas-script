@@ -8,3 +8,5 @@
 *.nso
 *.nsp
 *.zip
+
+*.o

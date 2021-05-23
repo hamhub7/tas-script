@@ -5,16 +5,7 @@
 #include <string>
 #include <vector>
 #include "ams/pm_ams.h"
-extern "C"
-{
-#include "lua535/lua.h"
-#include "lua535/lauxlib.h"
-#include "lua535/lualib.h"
-}
+#include <sol/sol.hpp>
+#include "format.hpp"
 
-void registerSVC(lua_State* L);
-
-int lua_svc_SleepThread(lua_State* L);
-int lua_svc_ReadMemory(lua_State* L);
-int lua_svc_MapProcessMemory(lua_State* L);
-int lua_svc_GetMainAddr(lua_State* L);
+void registerSVC(sol::state& lua);

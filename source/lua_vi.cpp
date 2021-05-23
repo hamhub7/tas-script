@@ -1,70 +1,48 @@
 #include "lua_vi.hpp"
 
-void registerVI(lua_State* L)
-{
-    lua_register(L, "vi_OpenDefaultDisplay", lua_vi_OpenDefaultDisplay);
-    lua_register(L, "vi_CloseDisplay", lua_vi_CloseDisplay);
-    lua_register(L, "vi_GetDisplayVsyncEvent", lua_vi_GetDisplayVsyncEvent);
-}
-
 // Opens the default display and returns it in table form
-int lua_vi_OpenDefaultDisplay(lua_State* L)
+ViDisplay lua_vi_OpenDefaultDisplay()
 {
-    ViDisplay* disp = reinterpret_cast<ViDisplay *>(lua_newuserdata(L, sizeof(ViDisplay)));
+    ViDisplay disp;
 
-    Result rc = viOpenDefaultDisplay(disp);
+    Result rc = viOpenDefaultDisplay(&disp);
     if(R_FAILED(rc))
     {
-        std::size_t len = std::snprintf(nullptr, 0, "Error opening default display: %#x", rc);
-        char error[len+1];
-        std::sprintf(error, "Error opening default display: %#x", rc);
-        lua_pushstring(L, error);
-        lua_error(L);
+        throw string_format("Error opening default display: %#x", rc);
     }
 
-    return 1;
+    return disp;
 }
 
 // Closes the display provided
-int lua_vi_CloseDisplay(lua_State* L)
+void lua_vi_CloseDisplay(ViDisplay* disp)
 {
-    ViDisplay* disp = reinterpret_cast<ViDisplay *>(lua_touserdata(L, -1));
-
-    int n = lua_gettop(L);
-    lua_pop(L, n);
-
     Result rc = viCloseDisplay(disp);
     if(R_FAILED(rc))
     {
-        std::size_t len = std::snprintf(nullptr, 0, "Error closing display: %#x", rc);
-        char error[len+1];
-        std::sprintf(error, "Error closing display: %#x", rc);
-        lua_pushstring(L, error);
-        lua_error(L);
+        throw string_format("Error closing display: %#x", rc);
     }
 
-    return 1;
+    return;
 }
 
 // Takes a display and returns a vsync event from that display
-int lua_vi_GetDisplayVsyncEvent(lua_State* L)
+Event lua_vi_GetDisplayVsyncEvent(ViDisplay* disp)
 {
-    ViDisplay* disp = reinterpret_cast<ViDisplay *>(lua_touserdata(L, -1));
+    Event vsync_event;
 
-    int n = lua_gettop(L);
-    lua_pop(L, n);
-
-    Event* vsync_event = reinterpret_cast<Event *>(lua_newuserdata(L, sizeof(Event)));
-
-    Result rc = viGetDisplayVsyncEvent(disp, vsync_event);
+    Result rc = viGetDisplayVsyncEvent(disp, &vsync_event);
     if(R_FAILED(rc))
     {
-        std::size_t len = std::snprintf(nullptr, 0, "Error getting vsync event: %#x", rc);
-        char error[len+1];
-        std::sprintf(error, "Error getting vsync event: %#x", rc);
-        lua_pushstring(L, error);
-        lua_error(L);
+        throw string_format("Error getting vsync event: %#x", rc);
     }
 
-    return 1;
+    return vsync_event;
+}
+
+void registerVI(sol::state& lua)
+{
+    lua.set_function("vi_OpenDefaultDisplay", lua_vi_OpenDefaultDisplay);
+    lua.set_function("vi_CloseDisplay", lua_vi_CloseDisplay);
+    lua.set_function("vi_GetDisplayVsyncEvent", lua_vi_GetDisplayVsyncEvent);
 }

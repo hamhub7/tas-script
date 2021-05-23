@@ -1,6 +1,6 @@
 # tas-script
-A modification of sys-script by Sorenbug to run on Lua and be more TAS focused\
-Find sys-script [here](https://github.com/sorenbug/sys-script)
+A modification of sys-script by Aly to run on Lua and be more TAS focused\
+Find sys-script [here](https://github.com/s5bug/sys-script)
 
 ## Support the Creators
 Join our [Discord server](https://discord.gg/HSPrhX8)\
@@ -19,8 +19,12 @@ Make a pull request!
 2. In the newly installed MSYS2, navigate to the folder you'd like to build this project in, either by opening MSYS in that directory or using the `cd` command to navigate
 3. `git clone https://github.com/hamhub7/tas-script.git` (You may need to install git with `pacman -S git`)
 4. `cd tas-script`
-5. `make` (You may need to install make with `pacman -S make`)
-6. You should see a file called `tas-script.nsp`
+5. `make lua` to build and install Lua (You may need to install make with `pacman -S make`)
+\
+\
+TODO: `switch-lua` should be installable from `pacman`.
+6. `make`
+7. You should see a file called `tas-script.nsp`
 \
 \
 Optionally, you can choose to run `make sd` to make a convenient sd card package. The command should create a folder called `sd` that you can simply drag and drop the contents of onto your sd card.
