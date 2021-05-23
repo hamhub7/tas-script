@@ -1,12 +1,6 @@
 #pragma once
 
 #include <switch.h>
-extern "C"
-{
-#include "lua535/lua.h"
-#include "lua535/lauxlib.h"
-#include "lua535/lualib.h"
-}
 
 class keyPad
 {
