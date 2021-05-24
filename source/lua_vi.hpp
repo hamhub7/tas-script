@@ -5,4 +5,4 @@
 #include <sol/sol.hpp>
 #include "format.hpp"
 
-void registerVI(sol::state& lua);
+void registerVI(sol::state &lua);

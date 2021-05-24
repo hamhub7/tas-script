@@ -16,7 +16,7 @@ bool lua_hid_KeyboardDown(HidKeyboardKey key)
     return keyboard.keyDown(key);
 }
 
-void registerHID(sol::state& lua)
+void registerHID(sol::state &lua)
 {
     lua.set_function("hid_ScanInput", lua_hid_ScanInput);
     lua.set_function("hid_KeyboardDown", lua_hid_KeyboardDown);

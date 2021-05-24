@@ -4,4 +4,4 @@
 #include <sol/sol.hpp>
 #include "keyPad.hpp"
 
-void registerHID(sol::state& lua);
+void registerHID(sol::state &lua);

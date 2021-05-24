@@ -13,4 +13,4 @@ typedef struct
     HiddbgHdlsState state;
 } Controller;
 
-void registerHIDDBG(sol::state& lua);
+void registerHIDDBG(sol::state &lua);

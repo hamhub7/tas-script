@@ -5,4 +5,4 @@
 #include <sol/sol.hpp>
 #include "format.hpp"
 
-void registerSwitch(sol::state& lua);
+void registerSwitch(sol::state &lua);

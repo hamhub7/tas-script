@@ -8,4 +8,4 @@
 #include <sol/sol.hpp>
 #include "format.hpp"
 
-void registerSVC(sol::state& lua);
+void registerSVC(sol::state &lua);

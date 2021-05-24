@@ -3,7 +3,7 @@
 // Returns a pro controller connected using bluetooth, accepting arguments for the bodyColor then buttonsColor then gripLColor then gripRcolor
 Controller lua_hiddbg_AttachController(u32 bodyColor, u32 buttonsColor, u32 gripLColor, u32 gripRColor)
 {
-    HiddbgHdlsDeviceInfo device = { 0 };
+    HiddbgHdlsDeviceInfo device = {0};
     device.deviceType = HidDeviceType_FullKey3;
     device.npadInterfaceType = HidNpadInterfaceType_Bluetooth;
     device.singleColorBody = bodyColor;
@@ -12,7 +12,7 @@ Controller lua_hiddbg_AttachController(u32 bodyColor, u32 buttonsColor, u32 grip
     device.colorRightGrip = gripRColor;
 
     Controller controller = {0};
-    
+
     Result rc = hiddbgAttachHdlsVirtualDevice(&controller.handle, &device);
     if (R_FAILED(rc))
     {
@@ -22,7 +22,7 @@ Controller lua_hiddbg_AttachController(u32 bodyColor, u32 buttonsColor, u32 grip
     controller.state.battery_level = 4;
 
     rc = hiddbgSetHdlsState(controller.handle, &controller.state);
-    if(R_FAILED(rc))
+    if (R_FAILED(rc))
     {
         throw string_format("Error setting controller state: %#x", rc);
     }
@@ -31,7 +31,7 @@ Controller lua_hiddbg_AttachController(u32 bodyColor, u32 buttonsColor, u32 grip
 }
 
 // Takes a controller userdata and detaches it
-void lua_hiddbg_DetachController(Controller* controller)
+void lua_hiddbg_DetachController(Controller *controller)
 {
     Result rc = hiddbgDetachHdlsVirtualDevice(controller->handle);
     if (R_FAILED(rc))
@@ -43,12 +43,12 @@ void lua_hiddbg_DetachController(Controller* controller)
 }
 
 // Takes a controller userdata and returns whether the handle is connected
-bool lua_hiddbg_IsControllerAttached(Controller* controller)
+bool lua_hiddbg_IsControllerAttached(Controller *controller)
 {
     bool isAttached;
 
     Result rc = hiddbgIsHdlsVirtualDeviceAttached(controller->handle, &isAttached);
-    if(R_FAILED(rc))
+    if (R_FAILED(rc))
     {
         throw string_format("Error checking if controller attached: %#x", rc);
     }
@@ -57,12 +57,12 @@ bool lua_hiddbg_IsControllerAttached(Controller* controller)
 }
 
 // Takes a controller userdata then a button field and updates the buttons
-void lua_hiddbg_SetButtons(Controller* controller, u64 buttons)
+void lua_hiddbg_SetButtons(Controller *controller, u64 buttons)
 {
     controller->state.buttons = buttons;
 
     Result rc = hiddbgSetHdlsState(controller->handle, &controller->state);
-    if(R_FAILED(rc))
+    if (R_FAILED(rc))
     {
         throw string_format("Error setting button state: %#x", rc);
     }
@@ -71,14 +71,19 @@ void lua_hiddbg_SetButtons(Controller* controller, u64 buttons)
 }
 
 // Takes a controller userdata then a joystick index then an x position and y position and updates the joystick in question
-void lua_hiddbg_SetJoystick(Controller* controller, int stickIndex, s32 x, s32 y)
+void lua_hiddbg_SetJoystick(Controller *controller, int stickIndex, s32 x, s32 y)
 {
-    HidAnalogStickState* stick = nullptr;
-    if(stickIndex == 1) {
+    HidAnalogStickState *stick = nullptr;
+    if (stickIndex == 1)
+    {
         stick = &controller->state.analog_stick_l;
-    } else if (stickIndex == 2) {
+    }
+    else if (stickIndex == 2)
+    {
         stick = &controller->state.analog_stick_r;
-    } else {
+    }
+    else
+    {
         throw "Invalid joystick specified";
     }
 
@@ -86,7 +91,7 @@ void lua_hiddbg_SetJoystick(Controller* controller, int stickIndex, s32 x, s32 y
     stick->y = y;
 
     Result rc = hiddbgSetHdlsState(controller->handle, &controller->state);
-    if(R_FAILED(rc))
+    if (R_FAILED(rc))
     {
         throw string_format("Error setting joystick state: %#x", rc);
     }
@@ -94,7 +99,7 @@ void lua_hiddbg_SetJoystick(Controller* controller, int stickIndex, s32 x, s32 y
     return;
 }
 
-void registerHIDDBG(sol::state& lua)
+void registerHIDDBG(sol::state &lua)
 {
     lua.set_function("hiddbg_AttachController", lua_hiddbg_AttachController);
     lua.set_function("hiddbg_DetachController", lua_hiddbg_DetachController);
