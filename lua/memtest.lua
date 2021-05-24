@@ -12,17 +12,17 @@ local size = 0x4
 while true do
     hid_ScanInput()
 
-    if hid_KeyboardDown(hid.KeyboardScancode.F1) then
+    if hid_KeyboardDown(hid.KeyboardKey.F1) then
         local value = svc_ReadMemory(mainAddr, offsets, size)
         Log(value)
     end
 
-    if hid_KeyboardDown(hid.KeyboardScancode.F2) then
+    if hid_KeyboardDown(hid.KeyboardKey.F2) then
         mainAddr = svc_GetMainAddr()
         Log(mainAddr)
     end
 
-    if hid_KeyboardDown(hid.KeyboardScancode.F3) then
+    if hid_KeyboardDown(hid.KeyboardKey.F3) then
         mainAddr = svc_GetMainAddr()
         Log(mainAddr)
         local value = svc_ReadMemory(mainAddr, offsets, size)

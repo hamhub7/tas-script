@@ -63,21 +63,21 @@ while true do
     if tasOn then
         -- Adding/removing controllers
         if tas.multiplayer then
-            if hid_KeyboardDown(hid.KeyboardScancode.Equal) and #controllers < 8 then
+            if hid_KeyboardDown(hid.KeyboardKey.Plus) and #controllers < 8 then
                 table.insert(controllers, hiddbg_AttachController(bodyColor, buttonsColor, gripLColor, gripRColor))
-            elseif hid_KeyboardDown(hid.KeyboardScancode.Minus) and attached(controllers, #controllers) then
+            elseif hid_KeyboardDown(hid.KeyboardKey.Minus) and attached(controllers, #controllers) then
                 hiddbg_DetachController(controllers[#controllers])
             end
         else
-            if hid_KeyboardDown(hid.KeyboardScancode.Equal) and #controllers < 1 then
+            if hid_KeyboardDown(hid.KeyboardKey.Plus) and #controllers < 1 then
                 controllers[1] = hiddbg_AttachController(bodyColor, buttonsColor, gripLColor, gripRColor)
-            elseif hid_KeyboardDown(hid.KeyboardScancode.Minus) and attached(controllers, 1) then
+            elseif hid_KeyboardDown(hid.KeyboardKey.Minus) and attached(controllers, 1) then
                 hiddbg_DetachController(controllers[1])
             end
         end
 
         -- Running scripts
-        if hid_KeyboardDown(hid.KeyboardScancode.F1) then
+        if hid_KeyboardDown(hid.KeyboardKey.F1) then
             if tas.multiplayer and #controllers > 1 then
                 if attached(controllers, #controllers) then
                     runMultiplayerScript("script1", controllers)
@@ -87,7 +87,7 @@ while true do
                     runScript("script1", controllers[1])
                 end
             end
-        elseif hid_KeyboardDown(hid.KeyboardScancode.F2) then
+        elseif hid_KeyboardDown(hid.KeyboardKey.F2) then
             if tas.multiplayer and #controllers > 1 then
                 if attached(controllers, #controllers) then
                     runMultiplayerScript("script2", controllers)
@@ -97,7 +97,7 @@ while true do
                     runScript("script2", controllers[1])
                 end
             end
-        elseif hid_KeyboardDown(hid.KeyboardScancode.F3) then
+        elseif hid_KeyboardDown(hid.KeyboardKey.F3) then
             if tas.multiplayer and #controllers > 1 then
                 if attached(controllers, #controllers) then
                     runMultiplayerScript("script3", controllers)
@@ -107,7 +107,7 @@ while true do
                     runScript("script3", controllers[1])
                 end
             end
-        elseif hid_KeyboardDown(hid.KeyboardScancode.F4) then
+        elseif hid_KeyboardDown(hid.KeyboardKey.F4) then
             if tas.multiplayer and #controllers > 1 then
                 if attached(controllers, #controllers) then
                     runMultiplayerScript("script4", controllers)
@@ -117,7 +117,7 @@ while true do
                     runScript("script4", controllers[1])
                 end
             end
-        elseif hid_KeyboardDown(hid.KeyboardScancode.F5) then
+        elseif hid_KeyboardDown(hid.KeyboardKey.F5) then
             if tas.multiplayer and #controllers > 1 then
                 if attached(controllers, #controllers) then
                     runMultiplayerScript("script5", controllers)
@@ -127,7 +127,7 @@ while true do
                     runScript("script5", controllers[1])
                 end
             end
-        elseif hid_KeyboardDown(hid.KeyboardScancode.F6) then
+        elseif hid_KeyboardDown(hid.KeyboardKey.F6) then
             if tas.multiplayer and #controllers > 1 then
                 if attached(controllers, #controllers) then
                     runMultiplayerScript("script6", controllers)
@@ -137,7 +137,7 @@ while true do
                     runScript("script6", controllers[1])
                 end
             end
-        elseif hid_KeyboardDown(hid.KeyboardScancode.F7) then
+        elseif hid_KeyboardDown(hid.KeyboardKey.F7) then
             if tas.multiplayer and #controllers > 1 then
                 if attached(controllers, #controllers) then
                     runMultiplayerScript("script7", controllers)
@@ -147,7 +147,7 @@ while true do
                     runScript("script7", controllers[1])
                 end
             end
-        elseif hid_KeyboardDown(hid.KeyboardScancode.F8) then
+        elseif hid_KeyboardDown(hid.KeyboardKey.F8) then
             if tas.multiplayer and #controllers > 1 then
                 if attached(controllers, #controllers) then
                     runMultiplayerScript("script8", controllers)
@@ -157,7 +157,7 @@ while true do
                     runScript("script8", controllers[1])
                 end
             end
-        elseif hid_KeyboardDown(hid.KeyboardScancode.F9) then
+        elseif hid_KeyboardDown(hid.KeyboardKey.F9) then
             if tas.multiplayer and #controllers > 1 then
                 if attached(controllers, #controllers) then
                     runMultiplayerScript("script9", controllers)
@@ -167,7 +167,7 @@ while true do
                     runScript("script9", controllers[1])
                 end
             end
-        elseif hid_KeyboardDown(hid.KeyboardScancode.F10) then
+        elseif hid_KeyboardDown(hid.KeyboardKey.F10) then
             if tas.multiplayer and #controllers > 1 then
                 if attached(controllers, #controllers) then
                     runMultiplayerScript("script10", controllers)
@@ -177,7 +177,7 @@ while true do
                     runScript("script10", controllers[1])
                 end
             end
-        elseif hid_KeyboardDown(hid.KeyboardScancode.F11) then
+        elseif hid_KeyboardDown(hid.KeyboardKey.F11) then
             if tas.multiplayer and #controllers > 1 then
                 if attached(controllers, #controllers) then
                     runMultiplayerScript("script11", controllers)
@@ -187,7 +187,7 @@ while true do
                     runScript("script11", controllers[1])
                 end
             end
-        elseif hid_KeyboardDown(hid.KeyboardScancode.F12) then
+        elseif hid_KeyboardDown(hid.KeyboardKey.F12) then
             if tas.multiplayer and #controllers > 1 then
                 if attached(controllers, #controllers) then
                     runMultiplayerScript("script12", controllers)
@@ -200,12 +200,12 @@ while true do
         end
 
         -- Utility keybinds
-        if hid_KeyboardDown(hid.KeyboardScancode.Q) and #controllers > 0 then
+        if hid_KeyboardDown(hid.KeyboardKey.Q) and #controllers > 0 then
             hiddbg_SetButtons(controllers[1], hid.ControllerKeys.A)
             waitFrames(5)
             hiddbg_SetButtons(controllers[1], 0)
             waitFrames(5)
-        elseif hid_KeyboardDown(hid.KeyboardScancode.W) and #controllers > 0 then
+        elseif hid_KeyboardDown(hid.KeyboardKey.W) and #controllers > 0 then
             for i,v in ipairs(controllers) do
                 hiddbg_SetButtons(v, hid.ControllerKeys.L | hid.ControllerKeys.R)
                 waitFrames(5)
@@ -215,7 +215,7 @@ while true do
         end
     end
 
-    if hid_KeyboardDown(hid.KeyboardScancode.Esc) then
+    if hid_KeyboardDown(hid.KeyboardKey.Escape) then
         tasOn = not tasOn
     end
 

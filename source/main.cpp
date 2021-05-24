@@ -23,10 +23,10 @@ extern "C"
     // Sysmodules should not use applet*.
     u32 __nx_applet_type = AppletType_None;
 
-    // Adjust size as needed.
-    #define INNER_HEAP_SIZE 0x400000
+// Adjust size as needed.
+#define INNER_HEAP_SIZE 0x400000
     size_t nx_inner_heap_size = INNER_HEAP_SIZE;
-    char   nx_inner_heap[INNER_HEAP_SIZE];
+    char nx_inner_heap[INNER_HEAP_SIZE];
 
     void __libnx_init_time(void);
     void __libnx_initheap(void);
@@ -36,15 +36,15 @@ extern "C"
 
 void __libnx_initheap(void)
 {
-	void*  addr = nx_inner_heap;
-	size_t size = nx_inner_heap_size;
+    void *addr = nx_inner_heap;
+    size_t size = nx_inner_heap_size;
 
-	// Newlib
-	extern char* fake_heap_start;
-	extern char* fake_heap_end;
+    // Newlib
+    extern char *fake_heap_start;
+    extern char *fake_heap_end;
 
-	fake_heap_start = (char*)addr;
-	fake_heap_end   = (char*)addr + size;
+    fake_heap_start = (char *)addr;
+    fake_heap_end = (char *)addr + size;
 }
 
 // Init/exit services, update as needed.
@@ -58,11 +58,12 @@ void __attribute__((weak)) __appInit(void)
         fatalThrow(MAKERESULT(Module_Libnx, LibnxError_InitFail_SM));
 
     rc = ldrDmntInitialize();
-    if(R_FAILED(rc))
+    if (R_FAILED(rc))
         fatalThrow(rc);
 
     rc = setsysInitialize();
-    if (R_SUCCEEDED(rc)) {
+    if (R_SUCCEEDED(rc))
+    {
         SetSysFirmwareVersion fw;
         rc = setsysGetFirmwareVersion(&fw);
         if (R_SUCCEEDED(rc))
@@ -89,7 +90,7 @@ void __attribute__((weak)) __appInit(void)
 
     // vsync
     rc = viInitialize(ViServiceType_System);
-    if(R_FAILED(rc))
+    if (R_FAILED(rc))
         fatalThrow(rc);
 
     // time
@@ -98,7 +99,7 @@ void __attribute__((weak)) __appInit(void)
         fatalThrow(rc);
 
     rc = pmdmntInitialize();
-    if(R_FAILED(rc))
+    if (R_FAILED(rc))
         fatalThrow(rc);
 
     // Attach Work Buffer
@@ -131,7 +132,7 @@ void logToSd(std::string message)
 {
     std::ofstream ofs;
     ofs.open(filepath, std::ofstream::out | std::ofstream::app);
-    if(ofs.is_open())
+    if (ofs.is_open())
     {
         ofs << message << std::endl;
     }
@@ -144,7 +145,7 @@ void logToSd(std::string message)
 void lua_SetupLog(std::string logpath)
 {
     std::ofstream ofs;
-    
+
     filepath = logpath;
     ofs.open(logpath, std::ofstream::out | std::ofstream::trunc);
     ofs.close();
@@ -160,17 +161,17 @@ void lua_Log(std::string msg)
     return;
 }
 
-void registerUtility(sol::state& lua)
+void registerUtility(sol::state &lua)
 {
     lua.set_function("SetupLog", lua_SetupLog);
     lua.set_function("Log", lua_Log);
 }
 
 // Main program entrypoint
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     sol::state lua;
-    lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::table);
+    lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::table, sol::lib::io, sol::lib::string);
 
     // Register Lua functions
     registerUtility(lua);
@@ -182,7 +183,8 @@ int main(int argc, char* argv[])
 
     // Your code / main loop goes here.
     sol::protected_function_result result = lua.safe_script_file("sdmc:/script/boot.lua");
-    if(!result.valid()) {
+    if (!result.valid())
+    {
         sol::error err = result;
         logToSd(err.what());
     }
