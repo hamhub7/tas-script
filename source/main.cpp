@@ -171,7 +171,7 @@ void registerUtility(sol::state &lua)
 int main(int argc, char *argv[])
 {
     sol::state lua;
-    lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::table, sol::lib::io, sol::lib::string);
+    lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::table, sol::lib::io, sol::lib::string, sol::lib::math);
 
     // Register Lua functions
     registerUtility(lua);
