@@ -215,9 +215,5 @@ while true do
         end
     end
 
-    if hid_KeyboardDown(hid.KeyboardKey.Escape) then
-        tasOn = not tasOn
-    end
-
     svc_SleepThread(6250000)
 end

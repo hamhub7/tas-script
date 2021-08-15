@@ -103,6 +103,14 @@ function nxtas.runTas(filename, controller)
     local readFile = true
     local controlMsg = {}
     while true do
+        hid_ScanInput()
+
+        if hid_KeyboardDown(hid.KeyboardKey.Escape) then 
+            clearInputs(controller)
+            Log("Script cancelled")
+            break 
+        end
+
         if readFile then
             local line = io.read()
             if line == nil then break end

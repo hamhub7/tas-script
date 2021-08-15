@@ -89,7 +89,7 @@ void lua_hiddbg_SetJoystick(Controller *controller, int stickIndex, s32 x, s32 y
 
     stick->x = x;
     stick->y = y;
-
+    
     Result rc = hiddbgSetHdlsState(controller->handle, &controller->state);
     if (R_FAILED(rc))
     {
