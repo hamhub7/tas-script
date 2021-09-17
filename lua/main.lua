@@ -65,13 +65,13 @@ while true do
         if tas.multiplayer then
             if hid_KeyboardDown(hid.KeyboardKey.Plus) and #controllers < 8 then
                 table.insert(controllers, hiddbg_AttachController(bodyColor, buttonsColor, gripLColor, gripRColor))
-            elseif hid_KeyboardDown(hid.KeyboardKey.Minus) and attached(controllers, #controllers) then
+            elseif hid_KeyboardDown(hid.KeyboardKey.Minus) and #controllers > 0 and attached(controllers, #controllers) then
                 hiddbg_DetachController(controllers[#controllers])
             end
         else
             if hid_KeyboardDown(hid.KeyboardKey.Plus) and #controllers < 1 then
                 controllers[1] = hiddbg_AttachController(bodyColor, buttonsColor, gripLColor, gripRColor)
-            elseif hid_KeyboardDown(hid.KeyboardKey.Minus) and attached(controllers, 1) then
+            elseif hid_KeyboardDown(hid.KeyboardKey.Minus) and #controllers > 0 and attached(controllers, 1) then
                 hiddbg_DetachController(controllers[1])
             end
         end
@@ -83,7 +83,7 @@ while true do
                     runMultiplayerScript("script1", controllers)
                 end
             else
-                if attached(controllers, 1) then
+                if #controllers > 0 and attached(controllers, 1) then
                     runScript("script1", controllers[1])
                 end
             end
@@ -93,7 +93,7 @@ while true do
                     runMultiplayerScript("script2", controllers)
                 end
             else
-                if attached(controllers, 1) then
+                if #controllers > 0 and attached(controllers, 1) then
                     runScript("script2", controllers[1])
                 end
             end
@@ -103,7 +103,7 @@ while true do
                     runMultiplayerScript("script3", controllers)
                 end
             else
-                if attached(controllers, 1) then
+                if #controllers > 0 and attached(controllers, 1) then
                     runScript("script3", controllers[1])
                 end
             end
@@ -113,7 +113,7 @@ while true do
                     runMultiplayerScript("script4", controllers)
                 end
             else
-                if attached(controllers, 1) then
+                if #controllers > 0 and attached(controllers, 1) then
                     runScript("script4", controllers[1])
                 end
             end
@@ -123,7 +123,7 @@ while true do
                     runMultiplayerScript("script5", controllers)
                 end
             else
-                if attached(controllers, 1) then
+                if #controllers > 0 and attached(controllers, 1) then
                     runScript("script5", controllers[1])
                 end
             end
@@ -133,7 +133,7 @@ while true do
                     runMultiplayerScript("script6", controllers)
                 end
             else
-                if attached(controllers, 1) then
+                if #controllers > 0 and attached(controllers, 1) then
                     runScript("script6", controllers[1])
                 end
             end
@@ -143,7 +143,7 @@ while true do
                     runMultiplayerScript("script7", controllers)
                 end
             else
-                if attached(controllers, 1) then
+                if #controllers > 0 and attached(controllers, 1) then
                     runScript("script7", controllers[1])
                 end
             end
@@ -153,7 +153,7 @@ while true do
                     runMultiplayerScript("script8", controllers)
                 end
             else
-                if attached(controllers, 1) then
+                if #controllers > 0 and attached(controllers, 1) then
                     runScript("script8", controllers[1])
                 end
             end
@@ -163,7 +163,7 @@ while true do
                     runMultiplayerScript("script9", controllers)
                 end
             else
-                if attached(controllers, 1) then
+                if #controllers > 0 and attached(controllers, 1) then
                     runScript("script9", controllers[1])
                 end
             end
@@ -173,7 +173,7 @@ while true do
                     runMultiplayerScript("script10", controllers)
                 end
             else
-                if attached(controllers, 1) then
+                if #controllers > 0 and attached(controllers, 1) then
                     runScript("script10", controllers[1])
                 end
             end
@@ -183,7 +183,7 @@ while true do
                     runMultiplayerScript("script11", controllers)
                 end
             else
-                if attached(controllers, 1) then
+                if #controllers > 0 and attached(controllers, 1) then
                     runScript("script11", controllers[1])
                 end
             end
@@ -193,7 +193,7 @@ while true do
                     runMultiplayerScript("script12", controllers)
                 end
             else
-                if attached(controllers, 1) then
+                if #controllers > 0 and attached(controllers, 1) then
                     runScript("script12", controllers[1])
                 end
             end
