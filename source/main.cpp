@@ -94,9 +94,9 @@ void __attribute__((weak)) __appInit(void)
         fatalThrow(rc);
 
     // time
-    rc = timeInitialize();
+    /*rc = timeInitialize();
     if (R_FAILED(rc))
-        fatalThrow(rc);
+        fatalThrow(rc);*/
 
     rc = pmdmntInitialize();
     if (R_FAILED(rc))
@@ -116,7 +116,7 @@ void __attribute__((weak)) __appExit(void)
 {
     // Cleanup default services.
     hiddbgReleaseHdlsWorkBuffer();
-    timeExit();
+    //timeExit();
     viExit();
     hiddbgExit();
     fsdevUnmountAll();
