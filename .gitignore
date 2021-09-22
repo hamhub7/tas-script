@@ -10,3 +10,6 @@
 *.zip
 
 *.o
+external/lua-5.4.2/src/luac
+external/lua-5.4.2/src/lua
+external/lua-5.4.2/src/liblua.a
