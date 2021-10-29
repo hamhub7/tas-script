@@ -4,7 +4,7 @@ Find sys-script [here](https://github.com/s5bug/sys-script)
 
 ## Examples
 Big thanks to Mars2030 and the entire SMO TAS community for their incredible work on the Super Mario Odyssey TASes! Here are a few examples of what our program is capable of\
-[Cap Kingdom Full TAS](https://www.youtube.com/watch?v=oMI796qC6xs)
+[Cap Kingdom Full TAS](https://www.youtube.com/watch?v=oMI796qC6xs)\
 [Cascade Kingdom Full TAS](https://www.youtube.com/watch?v=MUijOMkROGM)
 
 ## Support the Creators
