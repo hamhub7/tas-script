@@ -4,8 +4,7 @@ Find sys-script [here](https://github.com/s5bug/sys-script)
 
 ## Examples
 Big thanks to Mars2030 and the entire SMO TAS community for their incredible work on the Super Mario Odyssey TASes! Here are a few examples of what our program is capable of\
-[Cap Kingdom Full TAS](https://www.youtube.com/watch?v=oMI796qC6xs)\
-[Cascade Kingdom Full TAS](https://www.youtube.com/watch?v=MUijOMkROGM)
+[Cap Kingdom Full TAS](https://www.youtube.com/watch?v=oMI796qC6xs) (note that motion controls are accomplished by an ingame mod that maps motion to button presses)
 
 ## Support the Creators
 Join our [Discord server](https://discord.gg/HSPrhX8)\
