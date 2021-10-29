@@ -2,6 +2,11 @@
 A modification of sys-script by Aly to run on Lua and be more TAS focused\
 Find sys-script [here](https://github.com/s5bug/sys-script)
 
+## Examples
+Big thanks to Mars2030 and the entire SMO TAS community for their incredible work on the Super Mario Odyssey TASes! Here are a few examples of what our program is capable of\
+[Cap Kingdom Full TAS](https://www.youtube.com/watch?v=oMI796qC6xs)
+[Cascade Kingdom Full TAS](https://www.youtube.com/watch?v=MUijOMkROGM)
+
 ## Support the Creators
 Join our [Discord server](https://discord.gg/HSPrhX8)\
 Support me on [Patreon](https://www.patreon.com/aaronhh) or [PayPal](https://www.paypal.me/aaronhamhub)\
