@@ -1,5 +1,7 @@
 #include "lua_hiddbg.hpp"
 
+#include "hiddbg_global_buffer.hpp"
+
 // Returns a pro controller connected using bluetooth, accepting arguments for the bodyColor then buttonsColor then gripLColor then gripRcolor
 Controller lua_hiddbg_AttachController(u32 bodyColor, u32 buttonsColor, u32 gripLColor, u32 gripRColor)
 {
@@ -47,7 +49,7 @@ bool lua_hiddbg_IsControllerAttached(Controller *controller)
 {
     bool isAttached;
 
-    Result rc = hiddbgIsHdlsVirtualDeviceAttached(controller->handle, &isAttached);
+    Result rc = hiddbgIsHdlsVirtualDeviceAttached(tasScriptGlobalHiddbgSessionId, controller->handle, &isAttached);
     if (R_FAILED(rc))
     {
         throw string_format("Error checking if controller attached: %#x", rc);
