@@ -188,6 +188,8 @@ function nxtas.runMultiplayerTas(filenames, controllers)
                         readFiles[c] = false
                     end
                 end
+            else
+                clearInputs(controllers[c])
             end
         end
         EventWaitMax(vsync_event)
