@@ -18,6 +18,9 @@
 #include "lua_hiddbg.hpp"
 #include "lua_vi.hpp"
 
+// Include the global hiddbg work buffer
+#include "hiddbg_global_buffer.hpp"
+
 extern "C"
 {
     // Sysmodules should not use applet*.
@@ -103,7 +106,7 @@ void __attribute__((weak)) __appInit(void)
         fatalThrow(rc);
 
     // Attach Work Buffer
-    rc = hiddbgAttachHdlsWorkBuffer();
+    rc = hiddbgAttachHdlsWorkBuffer(&tasScriptGlobalHiddbgSessionId);
     if (R_FAILED(rc))
         fatalThrow(rc);
 
@@ -115,7 +118,7 @@ void __attribute__((weak)) userAppExit(void);
 void __attribute__((weak)) __appExit(void)
 {
     // Cleanup default services.
-    hiddbgReleaseHdlsWorkBuffer();
+    hiddbgReleaseHdlsWorkBuffer(tasScriptGlobalHiddbgSessionId);
     //timeExit();
     viExit();
     hiddbgExit();
